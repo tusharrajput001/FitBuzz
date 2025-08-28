@@ -3,10 +3,14 @@
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-container > h2{
     font-size: 30px;
+    color: white;
 }
 
 .login-container > div{
@@ -20,7 +24,22 @@
     border-radius: 8px;
 }
 
-.login-container > button{
-    padding: 5px 20px;
-    font-size: 18px;
+.login-container > .login-btn{
+    background: rgba(204, 244, 122, 0.8);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  height: 50px;
+  width: 12rem;
+  font-size: 15px;
+}
+
+.back-btn {
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
 }
