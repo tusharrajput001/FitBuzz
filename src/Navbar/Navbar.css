@@ -2,8 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-    background: url("https://picsum.photos/id/237/1200/800") no-repeat center center/cover;
 }
 
 .Navbar{
@@ -16,6 +14,7 @@
     justify-content: space-around;
     padding: 8px;
     border-radius: 100px;
+    margin-top: 30px;
 }
 
 .Navbar > button{
@@ -24,4 +23,5 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    color: white;
 }
