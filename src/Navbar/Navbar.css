@@ -1,0 +1,27 @@
+.Navbar-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    background: url("https://picsum.photos/id/237/1200/800") no-repeat center center/cover;
+}
+
+.Navbar{
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    width: 35%;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+    border-radius: 100px;
+}
+
+.Navbar > button{
+    font-size: 21px;
+    padding: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

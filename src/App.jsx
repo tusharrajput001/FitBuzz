@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import JourneyBox from '../src/Journey/JourneyBox'
 
 function App() {
   const [count, setCount] = useState(0)
