@@ -6,40 +6,108 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
 }
 
 .login-container > h2{
     font-size: 30px;
     color: white;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .login-container > div{
-    margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .login-container > div > input{
-    width: 15rem;
-    padding: 8px 20px;
-    font-size: 15px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
-.login-container > .login-btn{
+.login-container > div > input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.login-container > div > input:focus {
+    border-color: rgba(204, 244, 122, 0.8);
+}
+
+.login-btn{
     background: rgba(204, 244, 122, 0.8);
-  border: none;
-  padding: 0.5rem 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  height: 50px;
-  width: 12rem;
-  font-size: 15px;
+    border: none;
+    padding: 12px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    height: 50px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.login-btn:hover {
+    background: rgba(204, 244, 122, 1);
+}
+
+.login-container > p{
+    color: white;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 200;
+}
+
+.login-container > p > span {
+    color: rgba(204, 244, 122, 0.8);
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.login-container > p > span:hover {
+    color: rgba(204, 244, 122, 1);
+    transform: scale(1.2);
+    font-weight: 400;
 }
 
 .back-btn {
-  background: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 1.5rem;
+        min-width: 250px;
+    }
+    
+    .login-container > h2 {
+        font-size: 24px;
+    }
+    
+    .login-container > div > input {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .login-btn {
+        height: 45px;
+        font-size: 14px;
+    }
 }

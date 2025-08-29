@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 1rem;
 }
 
 .Navbar{
@@ -24,4 +25,36 @@
     border: none;
     cursor: pointer;
     color: white;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .Navbar {
+        width: 60%;
+    }
+    
+    .Navbar > button {
+        font-size: 18px;
+        padding: 4px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .Navbar {
+        width: 90%;
+        flex-direction: column;
+        border-radius: 15px;
+        padding: 12px;
+    }
+    
+    .Navbar > button {
+        font-size: 16px;
+        padding: 8px;
+        margin: 2px 0;
+    }
+    
+    .Navbar-container {
+        margin-top: 1rem;
+    }
 }
