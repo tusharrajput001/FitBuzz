@@ -2,4 +2,24 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  /* Mobile styles */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet styles */
+}
+
+@media (min-width: 1025px) {
+  /* Desktop styles */
 }

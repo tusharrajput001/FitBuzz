@@ -1,7 +1,7 @@
 import React from "react";
 import "./Login.css";
 
-const Login = ({ onBack }) => {
+const Login = ({ onBack, onSignup }) => {
   return (
     <div className="login-container">
       <h2>Login</h2>
@@ -12,7 +12,7 @@ const Login = ({ onBack }) => {
         <input placeholder="Enter Password" type="password" />
       </div>
       <button className="login-btn">Login</button>
-      <button className="back-btn" onClick={onBack}>⬅ Back</button>
+      <p>Don't have an account? <span onClick={onSignup}>Signup</span></p>
     </div>
   );
 };
