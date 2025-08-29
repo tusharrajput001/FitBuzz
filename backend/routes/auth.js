@@ -1,11 +1,9 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const supabase = require('../db');
 
 const router = express.Router();
 
-// Signup endpoint
+// Signup endpoint using Supabase Auth
 router.post('/signup', async (req, res) => {
     try {
         const { email, password, fullName } = req.body;
@@ -19,54 +17,29 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ error: 'Password must be at least 6 characters' });
         }
 
-        // Check if user already exists
-        const { data: existingUser, error: checkError } = await supabase
-            .from('users')
-            .select('id')
-            .eq('email', email)
-            .single();
-
-        if (existingUser) {
-            return res.status(400).json({ error: 'User already exists' });
-        }
-
-        // Hash password
-        const saltRounds = 10;
-        const passwordHash = await bcrypt.hash(password, saltRounds);
-
-        // Insert new user
-        const { data: newUser, error: insertError } = await supabase
-            .from('users')
-            .insert([
-                {
-                    email: email,
-                    password_hash: passwordHash,
-                    full_name: fullName || null
+        // Use Supabase Auth for signup
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    full_name: fullName
                 }
-            ])
-            .select('id, email, full_name, created_at')
-            .single();
+            }
+        });
 
-        if (insertError) {
-            console.error('Insert error:', insertError);
-            return res.status(500).json({ error: 'Error creating user' });
+        if (error) {
+            console.error('Signup error:', error);
+            return res.status(400).json({ error: error.message });
         }
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { userId: newUser.id, email: newUser.email },
-            process.env.JWT_SECRET,
-            { expiresIn: '24h' }
-        );
 
         res.status(201).json({
-            message: 'User created successfully',
+            message: 'User created successfully. Please check your email for verification.',
             user: {
-                id: newUser.id,
-                email: newUser.email,
-                fullName: newUser.full_name
-            },
-            token: token
+                id: data.user.id,
+                email: data.user.email,
+                fullName: data.user.user_metadata?.full_name
+            }
         });
 
     } catch (error) {
@@ -75,7 +48,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// Login endpoint
+// Login endpoint using Supabase Auth
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -85,43 +58,85 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
 
-        // Find user by email
-        const { data: user, error: fetchError } = await supabase
-            .from('users')
-            .select('id, email, password_hash, full_name')
-            .eq('email', email)
-            .single();
+        // Use Supabase Auth for login
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
-        if (fetchError || !user) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+        if (error) {
+            console.error('Login error:', error);
+            return res.status(401).json({ error: error.message });
         }
-
-        // Check password
-        const isValidPassword = await bcrypt.compare(password, user.password_hash);
-        
-        if (!isValidPassword) {
-            return res.status(401).json({ error: 'Invalid email or password' });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { userId: user.id, email: user.email },
-            process.env.JWT_SECRET,
-            { expiresIn: '24h' }
-        );
 
         res.json({
             message: 'Login successful',
             user: {
-                id: user.id,
-                email: user.email,
-                fullName: user.full_name
+                id: data.user.id,
+                email: data.user.email,
+                fullName: data.user.user_metadata?.full_name
             },
-            token: token
+            session: data.session
         });
 
     } catch (error) {
         console.error('Login error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Logout endpoint
+router.post('/logout', async (req, res) => {
+    try {
+        // Extract token from Authorization header
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        if (!token) {
+            return res.status(401).json({ error: 'Access token required' });
+        }
+
+        // Set the auth token for this request
+        const { error } = await supabase.auth.signOut();
+        
+        if (error) {
+            return res.status(500).json({ error: error.message });
+        }
+
+        res.json({ message: 'Logged out successfully' });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get current user
+router.get('/me', async (req, res) => {
+    try {
+        // Extract token from Authorization header
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        if (!token) {
+            return res.status(401).json({ error: 'Access token required' });
+        }
+
+        // Get user with the provided token
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+        
+        if (error || !user) {
+            return res.status(401).json({ error: 'Not authenticated' });
+        }
+
+        res.json({
+            user: {
+                id: user.id,
+                email: user.email,
+                fullName: user.user_metadata?.full_name
+            }
+        });
+    } catch (error) {
+        console.error('Get user error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
