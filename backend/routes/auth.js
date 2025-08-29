@@ -88,6 +88,15 @@ router.post('/login', async (req, res) => {
 // Logout endpoint
 router.post('/logout', async (req, res) => {
     try {
+        // Extract token from Authorization header
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        if (!token) {
+            return res.status(401).json({ error: 'Access token required' });
+        }
+
+        // Set the auth token for this request
         const { error } = await supabase.auth.signOut();
         
         if (error) {
@@ -104,7 +113,16 @@ router.post('/logout', async (req, res) => {
 // Get current user
 router.get('/me', async (req, res) => {
     try {
-        const { data: { user }, error } = await supabase.auth.getUser();
+        // Extract token from Authorization header
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        if (!token) {
+            return res.status(401).json({ error: 'Access token required' });
+        }
+
+        // Get user with the provided token
+        const { data: { user }, error } = await supabase.auth.getUser(token);
         
         if (error || !user) {
             return res.status(401).json({ error: 'Not authenticated' });
