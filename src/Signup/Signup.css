@@ -1,5 +1,5 @@
 .signup-container {
-  background: rgba(255, 255, 255, 0.15); 
+  background: rgba(255, 254, 254, 0.15); 
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);  
@@ -9,6 +9,8 @@
   padding: 2rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   min-width: 300px;
+  margin: 2rem auto;
+  max-width: 400px;
 }
 
 .signup-container > h2 {
@@ -36,18 +38,18 @@
 }
 
 .signup-container > div > input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(228, 227, 227, 0.7);
 }
 
 .signup-container > div > input:focus {
-  border-color: rgba(204, 244, 122, 0.8);
+  border-color: linear-gradient(135deg, #00d4ff, #87ceeb);
 }
 
 .signup-btn {
-  background: rgba(204, 244, 122, 0.8);
+  background: linear-gradient(135deg, #00d4ff, #87ceeb);
   border: none;
   padding: 12px 24px;
-  font-weight: bold;
+  font-weight: 400;
   cursor: pointer;
   transition: 0.3s;
   height: 50px;
@@ -58,7 +60,7 @@
 }
 
 .signup-btn:hover {
-  background: rgba(204, 244, 122, 1);
+  background: linear-gradient(135deg, #00d4ff, #87ceeb);
 }
 
 .signup-container > p {
@@ -70,16 +72,28 @@
 }
 
 .signup-container > p > span {
-  color: rgba(204, 244, 122, 0.8);
+  color: #00d4ff;
   cursor: pointer;
   transition: transform 0.3s ease;
   display: inline-block;
 }
 
 .signup-container > p > span:hover {
-  color: rgba(204, 244, 122, 1);
+  color: #00d4ff;
   transform: scale(1.2);
   font-weight: 400;
+}
+
+.signup-container > p > a {
+  color: #00d4ff;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.signup-container > p > a:hover {
+  color: white;
 }
 
 /* Responsive styles */

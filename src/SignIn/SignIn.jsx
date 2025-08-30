@@ -1,27 +1,24 @@
 import React from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import "./Signup.css";
+import "./SignIn.css";
 
-const Signup = () => {
+const SignIn = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="signup-container">
-      <h2>Create Account</h2>
-      <div>
-        <input placeholder="Enter Full Name" />
-      </div>
+    <div className="signin-container">
+      <h2>Sign In</h2>
       <div>
         <input placeholder="Enter Email" />
       </div>
       <div>
         <input placeholder="Enter Password" type="password" />
       </div>
-      <button className="signup-btn">Sign Up</button>
-      <p>Already have an account? <Link to="/signin">Login</Link></p>
+      <button className="signin-btn">Sign In</button>
+      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
       <p><Link to="/">← Back to Home</Link></p>
     </div>
   );
 };
 
-export default Signup;
+export default SignIn;

@@ -2,9 +2,27 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Roboto Slab", serif;
+  font-family: "Geist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  background: #000000; 
+  color: #fff;
+}
+
+/* wrapper to keep content centered and not 100% wide */
+.app-wrapper {
+  max-width: 1280px;       
+  margin: 0 auto;        
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Optional shrink when very large screens */
+@media screen and (min-width: 1600px) {
+  .app-wrapper {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
 }
 
 * {
