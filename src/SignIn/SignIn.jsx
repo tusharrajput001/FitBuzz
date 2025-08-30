@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./SignIn.css";
-import axios from "axios";
+import axios from "axios"
+import { AuthContext } from "../AuthContext/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +21,8 @@ const SignIn = () => {
         localStorage.setItem("token", res.data.session.access_token);
         localStorage.setItem("refreshToken", res.data.session.refresh_token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
+         setIsAuthenticated(true);
+        navigate("/")
       }
     } catch (error) {
       console.log("Login failed:", error.response?.data || error.message);

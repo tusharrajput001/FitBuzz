@@ -8,16 +8,28 @@ const API_URL = import.meta.env.VITE_API_BASE_URL;
 const Signup = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "", fullName: "" });
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(`${API_URL}/api/auth/signup`, form);
-      if(res.status == 201){
-        navigate("/signin")
+      if (res.status == 201) {
+        navigate("/signin");
       }
     } catch (error) {
       console.log("Signup failed:", error.response?.data || error.message);
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setForm({ ...form, password: value });
+
+    if (value.length < 6) {
+      setError("Password must be at least 6 characters long");
+    } else {
+      setError("");
     }
   };
 
@@ -26,7 +38,12 @@ const Signup = () => {
       <div className="signup-container">
         <h2>Create Account</h2>
         <div>
-          <input placeholder="Enter Full Name" required value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} />
+          <input
+            placeholder="Enter Full Name"
+            required
+            value={form.fullName}
+            onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+          />
         </div>
         <div>
           <input
@@ -42,8 +59,9 @@ const Signup = () => {
             type="password"
             required
             value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            onChange={handleChange}
           />
+          {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
         </div>
         <button className="signup-btn" onClick={handleSubmit}>
           Sign Up
