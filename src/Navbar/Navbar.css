@@ -1,129 +1,74 @@
+/* Navbar container */
 .navbar-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1rem 2rem;
-    background: rgba(69, 86, 33, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  padding: 12px 30px;
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  background: rgba(17, 25, 40, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Navbar content */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+/* Logo styling */
 .logo {
-    display: flex;
-    align-items: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.logo-text {
-    font-size: 1.8rem;
-    font-weight: bold;
-    background: linear-gradient(135deg, #00d4ff, #87ceeb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+.logo-main {
+  color: #ffffff;
 }
 
+.logo-highlight {
+  color: #00bfff; /* cyan highlight */
+}
+
+/* Buttons */
 .nav-buttons {
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
-    flex-shrink: 0;
+  display: flex;
+  gap: 12px;
 }
 
-.signin-btn {
-    background: transparent;
-    border: 2px solid #00d4ff;
-    color: #00d4ff;
-    padding: 0.5rem 1.5rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    width: 100px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+button {
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 6px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
 
-.signin-btn:hover {
-    background: rgba(0, 212, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+/* Outline button */
+.btn-outline {
+  background: transparent;
+  border: 1px solid #00bfff;
+  color: #00bfff;
 }
 
-.signup-btn {
-    background: #90EE90;
-    border: none;
-    color: #2d5016;
-    padding: 0.5rem 1.5rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    width: 100px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(144, 238, 144, 0.3);
+.btn-outline:hover {
+  background: rgba(0, 191, 255, 0.15);
 }
 
-.signup-btn:hover {
-    background: #7CFC00;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(144, 238, 144, 0.4);
+/* Filled button */
+.btn-fill {
+  background: #00bfff;
+  border: none;
+  color: #ffffff;
 }
 
-/* Tablet styles */
-@media (max-width: 1024px) {
-    .navbar-container {
-        padding: 1rem;
-    }
-    
-    .logo-text {
-        font-size: 1.6rem;
-    }
-    
-    .nav-buttons {
-        gap: 0.6rem;
-    }
-    
-    .signin-btn, .signup-btn {
-        padding: 0.35rem 1rem;
-        font-size: 0.8rem;
-    }
-}
-
-/* Mobile styles */
-@media (max-width: 768px) {
-    .navbar-container {
-        padding: 0.8rem 1rem;
-    }
-    
-    .logo-text {
-        font-size: 1.4rem;
-    }
-    
-    .nav-buttons {
-        gap: 0.5rem;
-    }
-    
-    .signin-btn, .signup-btn {
-        padding: 0.3rem 0.8rem;
-        font-size: 0.75rem;
-    }
+.btn-fill:hover {
+  background: #009acd;
 }
