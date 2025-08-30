@@ -1,10 +1,22 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import authService from "../services/auth/authService";
 import './HomePage.css'
 
 const HomePage = () => {
+    const navigate = useNavigate();
+
     const handleGetStarted = () => {
-        // TODO: Navigate to the AI wizard page
-        console.log("Navigate to AI wizard");
+        if (authService.isAuthenticated()) {
+            // User is logged in, navigate to wizard page
+            console.log("Navigate to AI wizard");
+            // TODO: Replace with actual wizard route when created
+            // navigate('/wizard');
+        } else {
+            // User is not logged in, navigate to signin page
+            console.log("Navigate to signin page");
+            navigate('/signin');
+        }
     };
 
     return(
