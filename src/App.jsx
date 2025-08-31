@@ -5,6 +5,7 @@ import SignIn from "./SignIn/SignIn";
 import Signup from "./Signup/Signup";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile/Profile";
+import WizardForm from "./UserInfoWizard/WizardForm";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -29,6 +30,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            } 
+          />
+            <Route 
+            path="/wizard" 
+            element={
+              <ProtectedRoute>
+                <WizardForm />
               </ProtectedRoute>
             } 
           />
