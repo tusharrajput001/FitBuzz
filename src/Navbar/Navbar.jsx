@@ -86,9 +86,9 @@ const Navbar = () => {
               >
                 <CgProfile /> Profile
               </button>
-              <button className="btn-fill" onClick={handleLogout}>
+              {/* <button className="btn-fill" onClick={handleLogout}>
                 Logout
-              </button>
+              </button> */}
             </>
           )}
         </div>

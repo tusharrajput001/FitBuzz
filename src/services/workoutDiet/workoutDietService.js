@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const N8N_URL = import.meta.env.N8N_URL;
+const N8N_URL = import.meta.env.N8N_URL || "http://localhost:5678";
 
 
 class WorkoutDietService {
