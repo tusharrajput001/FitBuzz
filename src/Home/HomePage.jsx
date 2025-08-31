@@ -10,8 +10,7 @@ const HomePage = () => {
         if (authService.isAuthenticated()) {
             // User is logged in, navigate to wizard page
             console.log("Navigate to AI wizard");
-            // TODO: Replace with actual wizard route when created
-            // navigate('/wizard');
+            navigate('/wizard');
         } else {
             // User is not logged in, navigate to signin page
             console.log("Navigate to signin page");
