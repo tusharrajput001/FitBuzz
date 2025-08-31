@@ -15,6 +15,11 @@
   text-align: left;
 }
 
+.form2-container .form-field h2 .required {
+  color: #ff6b6b;
+  margin-left: 4px;
+}
+
 .form2-container .form-field input {
   width: 100%;
   padding: 12px;
@@ -34,6 +39,11 @@
 .form2-container .form-field input:focus {
   border-color: #00d4ff;
   box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.form2-container .form-field input.filled {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
 }
 
 /* Animation */

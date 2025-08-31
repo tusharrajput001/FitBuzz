@@ -5,7 +5,7 @@ const Form2 = ({ formData, handleChange }) => {
   return (
     <div className="form2-container">
       <div className="form-field">
-        <h2>Height</h2>
+        <h2>Height <span className="required">*</span></h2>
         <input
           type="number"
           name="height"
@@ -15,10 +15,11 @@ const Form2 = ({ formData, handleChange }) => {
           min="100"
           max="250"
           required
+          className={formData.height ? "filled" : ""}
         />
       </div>
       <div className="form-field">
-        <h2>Weight</h2>
+        <h2>Weight <span className="required">*</span></h2>
         <input
           type="number"
           name="weight"
@@ -29,6 +30,7 @@ const Form2 = ({ formData, handleChange }) => {
           max="300"
           step="0.1"
           required
+          className={formData.weight ? "filled" : ""}
         />
       </div>
     </div>
