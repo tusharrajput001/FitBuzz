@@ -3,18 +3,19 @@ import Layout from "./Layout/Layout";
 import HomePage from "./Home/HomePage";
 import SignIn from "./SignIn/SignIn";
 import Signup from "./Signup/Signup";
-
+import Dashboard from "./Dashboard/Dashboard";
 
 function App() {
   return (
     <div className="app-wrapper">
       <Router>
         <Layout>
-                  <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
         </Layout>
       </Router>
     </div>
