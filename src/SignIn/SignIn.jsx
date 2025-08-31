@@ -5,6 +5,7 @@ import axios from "axios"
 import { AuthContext } from "../AuthContext/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
+console.log('SignIn API_URL:', API_URL);
 
 const SignIn = () => {
   const navigate = useNavigate();

@@ -1,8 +1,9 @@
-const API_BASE_URL = import.meta.env.API_BASE_URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 class ApiService {
   constructor() {
     this.baseURL = API_BASE_URL;
+    console.log('ApiService baseURL:', this.baseURL);
   }
 
   // Helper method to get headers

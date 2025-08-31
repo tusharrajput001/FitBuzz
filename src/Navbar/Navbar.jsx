@@ -72,17 +72,23 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            // Show Profile button and Logout when user is authenticated
+            // Show Dashboard, Profile button and Logout when user is authenticated
             <>
+              <button
+                className="btn-outline"
+                onClick={() => navigate("/dashboard")}
+              >
+                Dashboard
+              </button>
               <button
                 className="btn-outline"
                 onClick={() => navigate("/profile")}
               >
                 <CgProfile /> Profile
               </button>
-              <button className="btn-fill" onClick={handleLogout}>
+              {/* <button className="btn-fill" onClick={handleLogout}>
                 Logout
-              </button>
+              </button> */}
             </>
           )}
         </div>
