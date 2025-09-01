@@ -176,27 +176,38 @@ const Dashboard = () => {
           <h2>CHARTS</h2>
           <p>Charts and graphs will be displayed here</p>
           
-          {/* Plan Selection */}
-          {plans.length > 0 && (
-            <div className="plan-selector">
-              <label htmlFor="plan-select">Select Plan: </label>
-              <select 
-                id="plan-select" 
-                value={currentPlan?.id || ""} 
-                onChange={(e) => handlePlanChange(e.target.value)}
-                className="plan-dropdown"
-              >
-                {plans.map(plan => (
-                  <option key={plan.id} value={plan.id}>
-                    {plan.name} - {new Date(plan.created_at).toLocaleDateString()}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+
           
         </div>
       </div>
+
+      {/* Fitness Plans Section */}
+      {plans.length > 0 && (
+        <div className="fitness-plans-section">
+          <div className="plans-header">
+            <h2>Fitness Plans</h2>
+            <span className="plans-count">TOTAL: {plans.length}</span>
+          </div>
+          <div className="plans-container">
+            {plans.map(plan => (
+              <div 
+                key={plan.id} 
+                className={`plan-card ${currentPlan?.id === plan.id ? 'active' : ''}`}
+                onClick={() => handlePlanChange(plan.id)}
+              >
+                <div className="plan-info">
+                  <span className="plan-name">
+                    {plan.name} - {new Date(plan.created_at).toLocaleDateString()}
+                  </span>
+                  {currentPlan?.id === plan.id && (
+                    <span className="active-badge">ACTIVE</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Tabs Section */}
       <div className="tabs-section">
@@ -214,7 +225,6 @@ const Dashboard = () => {
           >
             DIET
           </button>
-          <div className="tab-arrow">→</div>
         </div>
 
         {/* Content Area */}

@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const N8N_URL = import.meta.env.N8N_URL || "http://localhost:5678";
-
-const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const N8N_URL = import.meta.env.VITE_N8N_URL;
+const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 class WorkoutDietService {
