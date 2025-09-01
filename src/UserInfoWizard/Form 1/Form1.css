@@ -15,6 +15,11 @@
   text-align: left;
 }
 
+.form1-container .form-field h2 .required {
+  color: #ff6b6b;
+  margin-left: 4px;
+}
+
 .form1-container .form-field input,
 .form1-container .form-field select {
   width: 100%;
@@ -36,6 +41,12 @@
 .form1-container .form-field select:focus {
   border-color: #00d4ff;
   box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.form1-container .form-field input.filled,
+.form1-container .form-field select.filled {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
 }
 
 .form1-container .form-field select {

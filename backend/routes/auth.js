@@ -3,6 +3,34 @@ const supabase = require('../db');
 
 const router = express.Router();
 
+// Helper function to sync user to custom users table
+async function syncUserToCustomTable(userData) {
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .upsert({
+                id: userData.id,
+                email: userData.email,
+                full_name: userData.user_metadata?.full_name || userData.email,
+                password_hash: 'synced_from_auth', // Placeholder since we don't store actual passwords
+                created_at: userData.created_at,
+                updated_at: new Date().toISOString()
+            }, {
+                onConflict: 'id',
+                ignoreDuplicates: false
+            });
+
+        if (error) {
+            console.error('Error syncing user to custom table:', error);
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Error in syncUserToCustomTable:', error);
+        return false;
+    }
+}
+
 // Signup endpoint using Supabase Auth
 router.post('/signup', async (req, res) => {
     try {
@@ -31,6 +59,14 @@ router.post('/signup', async (req, res) => {
         if (error) {
             console.error('Signup error:', error);
             return res.status(400).json({ error: error.message });
+        }
+
+        // Auto-sync user to custom users table
+        if (data.user) {
+            const syncSuccess = await syncUserToCustomTable(data.user);
+            if (!syncSuccess) {
+                console.warn('Warning: Failed to sync user to custom table, but auth signup succeeded');
+            }
         }
 
         res.status(201).json({
@@ -67,6 +103,14 @@ router.post('/login', async (req, res) => {
         if (error) {
             console.error('Login error:', error);
             return res.status(401).json({ error: error.message });
+        }
+
+        // Auto-sync user to custom users table (in case they were created before this sync was implemented)
+        if (data.user) {
+            const syncSuccess = await syncUserToCustomTable(data.user);
+            if (!syncSuccess) {
+                console.warn('Warning: Failed to sync user to custom table, but login succeeded');
+            }
         }
 
         res.json({

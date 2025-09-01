@@ -4,6 +4,7 @@ require('dotenv').config();
 
 
 const authRoutes = require('./routes/auth');
+const plansRoutes = require('./routes/plans');
 const authenticateToken = require('./middleware/auth');
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/plans', plansRoutes);
 
 // Protected route 
 app.get('/api/protected', authenticateToken, (req, res) => {

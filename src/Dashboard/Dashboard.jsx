@@ -1,58 +1,202 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import workoutDietService from "../services/workoutDiet/workoutDietService";
+import authService from "../services/auth/authService";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("workout");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationMessage, setGenerationMessage] = useState("");
+  const [plans, setPlans] = useState([]);
+  const [currentPlan, setCurrentPlan] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [expandedDays, setExpandedDays] = useState(new Set());
+  const [selectedMeals, setSelectedMeals] = useState({});
 
-  // Fake data for workout
-  const workoutData = [
-    { id: 1, name: "Push-ups", sets: 3, reps: 15, completed: true },
-    { id: 2, name: "Squats", sets: 4, reps: 20, completed: true },
-    { id: 3, name: "Pull-ups", sets: 3, reps: 8, completed: false },
-    { id: 4, name: "Plank", sets: 3, duration: "60s", completed: false },
-    { id: 5, name: "Burpees", sets: 3, reps: 10, completed: true },
-  ];
+  // Fetch user's plans from database
+  useEffect(() => {
+    fetchUserPlans();
+  }, []);
 
-  // Fake data for diet
-  const dietData = [
-    { id: 1, meal: "Breakfast", food: "Oatmeal with berries", calories: 320, time: "8:00 AM" },
-    { id: 2, meal: "Snack", food: "Greek yogurt", calories: 150, time: "10:30 AM" },
-    { id: 3, meal: "Lunch", food: "Grilled chicken salad", calories: 450, time: "1:00 PM" },
-    { id: 4, meal: "Snack", food: "Almonds", calories: 160, time: "3:30 PM" },
-    { id: 5, meal: "Dinner", food: "Salmon with vegetables", calories: 520, time: "7:00 PM" },
-  ];
-
-  // Function to generate new workout and diet plan
-  const handleGeneratePlan = async () => {
-    setIsGenerating(true);
-    setGenerationMessage("Generating your personalized plan...");
-    
+  const fetchUserPlans = async () => {
     try {
-      const userProfile = {
-        name: "Tushar Rajput",
-        age: 23,
-        gender: "Male",
-        goal: "Muscle Gain",
-        height: 178,
-        weight: 72,
-        diet_preference: "High Protein Vegetarian"
-      };
+      setLoading(true);
+      const token = authService.getToken();
+      if (!token) {
+        setError("No authentication token found");
+        setLoading(false);
+        return;
+      }
+
+      const userPlans = await workoutDietService.getPlans(token);
+      console.log("Fetched plans from API:", userPlans);
+      setPlans(userPlans);
       
-      const result = await workoutDietService.generatePlan(userProfile);
-      setGenerationMessage("Plan generated successfully! Check your workout and diet tabs.");
-      console.log("Generated plan:", result);
-    } catch (error) {
-      setGenerationMessage("An error occurred while generating the plan.");
-      console.error("Error generating plan:", error);
+      // Set the most recent plan as current plan
+      if (userPlans && userPlans.length > 0) {
+        console.log("Setting current plan:", userPlans[0]);
+        setCurrentPlan(userPlans[0]); // Most recent plan
+        
+        // Expand the first day by default for better UX
+        if (userPlans[0].workout_days && userPlans[0].workout_days.length > 0) {
+          setExpandedDays(new Set([userPlans[0].workout_days[0].id]));
+        }
+      }
+      
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching plans:", err);
+      setError("Failed to load your plans");
     } finally {
-      setIsGenerating(false);
-      // Clear message after 5 seconds
-      setTimeout(() => setGenerationMessage(""), 5000);
+      setLoading(false);
     }
   };
+
+ 
+
+  // Get workout data grouped by day
+  const getWorkoutDataByDay = () => {
+    if (!currentPlan || !currentPlan.workout_days) return [];
+    
+    console.log("Processing workout days:", currentPlan.workout_days);
+    
+    return currentPlan.workout_days.map(day => {
+      console.log(`Processing day: ${day.day_name}, exercises:`, day.workout_exercises);
+      
+      const dayData = {
+        id: day.id,
+        dayName: day.day_name,
+        dayNumber: day.day_number,
+        focusArea: day.focus_area,
+        isRestDay: !day.workout_exercises || day.workout_exercises.length === 0,
+        exercises: []
+      };
+      
+      if (day.workout_exercises && day.workout_exercises.length > 0) {
+        dayData.exercises = day.workout_exercises.map(exercise => ({
+          id: exercise.id,
+          name: exercise.exercise_name,
+          sets: exercise.sets,
+          reps: exercise.reps,
+          duration: exercise.duration_seconds ? `${exercise.duration_seconds}` : null,
+          completed: false, // You can add completion tracking later
+        }));
+      } else {
+        // Add a placeholder for rest days
+        dayData.exercises = [{
+          id: `rest-${day.id}`,
+          name: "Rest Day",
+          sets: 0,
+          reps: "Complete Rest",
+          duration: null,
+          completed: false,
+          isRestDay: true
+        }];
+      }
+      
+      return dayData;
+    });
+  };
+
+  // Get diet data grouped by meal type
+  const getDietDataByMeal = () => {
+    if (!currentPlan || !currentPlan.meals) return [];
+    
+    console.log("Processing meals:", currentPlan.meals);
+    
+    // Group meals by type and create meal options
+    const mealGroups = {};
+    
+    currentPlan.meals.forEach(meal => {
+      const mealType = meal.meal_type.charAt(0).toUpperCase() + meal.meal_type.slice(1).toLowerCase();
+      
+      if (!mealGroups[mealType]) {
+        mealGroups[mealType] = {
+          id: meal.id,
+          mealType: mealType,
+          options: [],
+          totalCalories: 0
+        };
+      }
+      
+      // Create meal option
+      const mealOption = {
+        id: meal.id,
+        food: meal.meal_items?.map(item => item.food_name).join(", ") || "No items",
+        calories: meal.meal_items?.reduce((sum, item) => sum + (item.calories || 0), 0) || 0,
+        time: meal.meal_time || "Not specified",
+        selected: false
+      };
+      
+      mealGroups[mealType].options.push(mealOption);
+      mealGroups[mealType].totalCalories += mealOption.calories;
+    });
+    
+    const dietData = Object.values(mealGroups);
+    console.log("Final diet data:", dietData);
+    return dietData;
+  };
+
+  // Handle plan selection
+  const handlePlanChange = (planId) => {
+    const selectedPlan = plans.find(plan => plan.id === planId);
+    setCurrentPlan(selectedPlan);
+    
+    // Expand the first day of the selected plan
+    if (selectedPlan.workout_days && selectedPlan.workout_days.length > 0) {
+      setExpandedDays(new Set([selectedPlan.workout_days[0].id]));
+    }
+  };
+
+  // Toggle day expansion
+  const toggleDayExpansion = (dayId) => {
+    setExpandedDays(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(dayId)) {
+        newSet.delete(dayId);
+      } else {
+        newSet.add(dayId);
+      }
+      return newSet;
+    });
+  };
+
+  // Handle meal selection
+  const handleMealSelection = (mealType, mealId) => {
+    setSelectedMeals(prev => ({
+      ...prev,
+      [mealType]: mealId
+    }));
+  };
+
+  if (loading) {
+    return (
+      <div className="dashboard">
+        <div className="loading-container">
+          <h2>Loading your plans...</h2>
+          <div className="loading-spinner"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard">
+        <div className="error-container">
+          <h2>Error</h2>
+          <p>{error}</p>
+          <button onClick={fetchUserPlans} className="retry-btn">
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const workoutDataByDay = getWorkoutDataByDay();
+  const dietDataByMeal = getDietDataByMeal();
 
   return (
     <div className="dashboard">
@@ -61,20 +205,39 @@ const Dashboard = () => {
         <div className="charts-placeholder">
           <h2>CHARTS</h2>
           <p>Charts and graphs will be displayed here</p>
-          <button 
-            className="generate-plan-btn"
-            onClick={handleGeneratePlan}
-            disabled={isGenerating}
-          >
-            {isGenerating ? "Generating..." : "Generate New Plan"}
-          </button>
-          {generationMessage && (
-            <div className="generation-message">
-              {generationMessage}
-            </div>
-          )}
+          
+
+          
         </div>
       </div>
+
+      {/* Fitness Plans Section */}
+      {plans.length > 0 && (
+        <div className="fitness-plans-section">
+          <div className="plans-header">
+            <h2>Fitness Plans</h2>
+            <span className="plans-count">TOTAL: {plans.length}</span>
+          </div>
+          <div className="plans-container">
+            {plans.map(plan => (
+              <div 
+                key={plan.id} 
+                className={`plan-card ${currentPlan?.id === plan.id ? 'active' : ''}`}
+                onClick={() => handlePlanChange(plan.id)}
+              >
+                <div className="plan-info">
+                  <span className="plan-name">
+                    {plan.name} - {new Date(plan.created_at).toLocaleDateString()}
+                  </span>
+                  {currentPlan?.id === plan.id && (
+                    <span className="active-badge">ACTIVE</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Tabs Section */}
       <div className="tabs-section">
@@ -92,45 +255,147 @@ const Dashboard = () => {
           >
             DIET
           </button>
-          <div className="tab-arrow">→</div>
         </div>
 
         {/* Content Area */}
         <div className="content-area">
           {activeTab === "workout" ? (
             <div className="workout-content">
-              <h3>Today's Workout Plan</h3>
-              <div className="workout-list">
-                {workoutData.map((exercise) => (
-                  <div key={exercise.id} className={`workout-item ${exercise.completed ? "completed" : ""}`}>
-                    <div className="exercise-info">
-                      <h4>{exercise.name}</h4>
-                      <p>{exercise.sets} sets × {exercise.reps || exercise.duration}</p>
-                    </div>
-                    <div className="status">
-                      {exercise.completed ? "✓" : "○"}
-                    </div>
-                  </div>
-                ))}
+              <div className="workout-header">
+                <h3>Your Workout Plan</h3>
+                <div className="workout-controls">
+                  <button 
+                    className="expand-btn"
+                    onClick={() => setExpandedDays(new Set(workoutDataByDay.map(day => day.id)))}
+                  >
+                    Expand All
+                  </button>
+                  <button 
+                    className="collapse-btn"
+                    onClick={() => setExpandedDays(new Set())}
+                  >
+                    Collapse All
+                  </button>
+                </div>
               </div>
+              {workoutDataByDay.length > 0 ? (
+                <div className="workout-days-list">
+                  {workoutDataByDay.map((day) => (
+                    <div key={day.id} className="workout-day">
+                      <div 
+                        className={`day-header ${day.isRestDay ? 'rest-day-header' : ''}`}
+                        onClick={() => toggleDayExpansion(day.id)}
+                      >
+                        <div className="day-info">
+                          <h4>{day.dayName}</h4>
+                          <div className="day-meta">
+                            <span className="focus-area">{day.focusArea}</span>
+                            <span className="exercise-count">
+                              {day.exercises.length} {day.exercises.length === 1 ? 'exercise' : 'exercises'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="day-toggle">
+                          <span className="toggle-icon">
+                            {expandedDays.has(day.id) ? '▼' : '▶'}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {expandedDays.has(day.id) && (
+                        <div className="day-exercises">
+                          {day.exercises.map((exercise) => (
+                            <div key={exercise.id} className={`workout-item ${exercise.completed ? "completed" : ""} ${exercise.isRestDay ? "rest-day" : ""}`}>
+                              <div className="exercise-info">
+                                <h5>{exercise.name}</h5>
+                                {exercise.isRestDay ? (
+                                  <p className="rest-day-text">Rest Day</p>
+                                ) : (
+                                  <p>
+                                    {exercise.sets} sets × {exercise.duration ? `${exercise.duration}` : exercise.reps}
+                                    {exercise.duration && <span className="duration-unit">s</span>}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="status">
+                                {exercise.isRestDay ? "😴" : (exercise.completed ? "✓" : "○")}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-data">
+                  <p>No workout plan found. Generate a new plan to get started!</p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="diet-content">
-              <h3>Today's Meal Plan</h3>
-              <div className="diet-list">
-                {dietData.map((meal) => (
-                  <div key={meal.id} className="diet-item">
-                    <div className="meal-info">
-                      <h4>{meal.meal}</h4>
-                      <p>{meal.food}</p>
-                      <span className="time">{meal.time}</span>
-                    </div>
-                    <div className="calories">
-                      {meal.calories} cal
-                    </div>
-                  </div>
-                ))}
+              <div className="diet-header">
+                <h3>Today's Meal Plan</h3>
+                <div className="diet-controls">
+                  <button 
+                    className="select-all-btn"
+                    onClick={() => {
+                      const allSelected = {};
+                      dietDataByMeal.forEach(mealGroup => {
+                        if (mealGroup.options.length > 0) {
+                          allSelected[mealGroup.mealType] = mealGroup.options[0].id;
+                        }
+                      });
+                      setSelectedMeals(allSelected);
+                    }}
+                  >
+                    Select All
+                  </button>
+                  <button 
+                    className="clear-all-btn"
+                    onClick={() => setSelectedMeals({})}
+                  >
+                    Clear All
+                  </button>
+                </div>
               </div>
+              {dietDataByMeal.length > 0 ? (
+                <div className="diet-meals-list">
+                  {dietDataByMeal.map((mealGroup) => (
+                    <div key={mealGroup.id} className="meal-group">
+                      <div className="meal-group-header">
+                        <h4>{mealGroup.mealType}</h4>
+                        <span className="total-calories">{mealGroup.totalCalories} cal</span>
+                      </div>
+                      <div className="meal-options">
+                        {mealGroup.options.map((option) => (
+                          <div 
+                            key={option.id} 
+                            className={`meal-option ${selectedMeals[mealGroup.mealType] === option.id ? 'selected' : ''}`}
+                            onClick={() => handleMealSelection(mealGroup.mealType, option.id)}
+                          >
+                            <div className="meal-option-info">
+                              <p className="food-description">{option.food}</p>
+                              <span className="meal-time">{option.time}</span>
+                            </div>
+                            <div className="meal-option-calories">
+                              {option.calories} cal
+                            </div>
+                            <div className="selection-indicator">
+                              {selectedMeals[mealGroup.mealType] === option.id ? '✓' : '○'}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-data">
+                  <p>No meal plan found. Generate a new plan to get started!</p>
+                </div>
+              )}
             </div>
           )}
         </div>
