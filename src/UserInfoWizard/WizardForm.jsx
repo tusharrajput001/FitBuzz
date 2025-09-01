@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Form1 from "./Form 1/Form1";
 import Form2 from "./Form 2/Form2";
 import Form3 from "./Form 3/Form3";
 import LoadingPopup from "../components/LoadingPopup/LoadingPopup";
 import workoutDietService from "../services/workoutDiet/workoutDietService";
+import authService from "../services/auth/authService";
 import "./WizardForm.css";
 
 const WizardForm = () => {
@@ -106,6 +107,36 @@ const WizardForm = () => {
       const response = await workoutDietService.generatePlan(apiData);
       
       console.log("Plan generated successfully:", response);
+      console.log("Response type:", typeof response);
+      console.log("Response structure:", JSON.stringify(response, null, 2));
+      
+      // Validate that we have the required data structure
+      if (!response || !response.workout_plan || !response.diet_plan) {
+        console.error("Invalid response structure:", response);
+        throw new Error("Generated plan does not have the expected structure");
+      }
+      
+      // Save the generated plan to the database
+      try {
+        const token = authService.getToken();
+        if (token) {
+          console.log("Saving plan to database with data:", {
+            workout_plan: response.workout_plan,
+            diet_plan: response.diet_plan
+          });
+          
+          console.log("Saving original generated plan to database");
+          const saveResponse = await workoutDietService.savePlan(response, token);
+          console.log("Plan saved to database:", saveResponse);
+          
+          // Store the plan ID for future reference
+          localStorage.setItem('userPlanId', saveResponse.plan_id);
+        }
+      } catch (saveError) {
+        console.error("Error saving plan to database:", saveError);
+        console.error("Save error details:", saveError.response?.data);
+        // Don't block the user flow if saving fails, just log the error
+      }
       
       // Store the generated plan data in localStorage for use in dashboard
       localStorage.setItem('userPlan', JSON.stringify(response));
