@@ -480,6 +480,148 @@
 }
 
 /* Diet Content */
+.diet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.diet-header h3 {
+  margin: 0;
+}
+
+.diet-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.select-all-btn, .clear-all-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select-all-btn:hover, .clear-all-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.diet-meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.meal-group {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.meal-group-header {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-group-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.total-calories {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.meal-options {
+  padding: 20px;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meal-option {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.meal-option:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-color: #ffc107;
+}
+
+.meal-option.selected {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+}
+
+.meal-option-info {
+  flex: 1;
+}
+
+.food-description {
+  margin: 0 0 5px 0;
+  color: #495057;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.meal-time {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.meal-option-calories {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.selection-indicator {
+  font-size: 1.2rem;
+  color: #28a745;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.meal-option:not(.selected) .selection-indicator {
+  color: #6c757d;
+}
+
+/* Legacy diet styles for backward compatibility */
 .diet-list {
   display: flex;
   flex-direction: column;

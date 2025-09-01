@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedDays, setExpandedDays] = useState(new Set());
+  const [selectedMeals, setSelectedMeals] = useState({});
 
   // Fetch user's plans from database
   useEffect(() => {
@@ -98,20 +99,41 @@ const Dashboard = () => {
     });
   };
 
-  // Get diet data from current plan
-  const getDietData = () => {
+  // Get diet data grouped by meal type
+  const getDietDataByMeal = () => {
     if (!currentPlan || !currentPlan.meals) return [];
     
     console.log("Processing meals:", currentPlan.meals);
     
-    const dietData = currentPlan.meals.map(meal => ({
-      id: meal.id,
-      meal: meal.meal_type.charAt(0).toUpperCase() + meal.meal_type.slice(1).toLowerCase(), // Properly capitalize
-      food: meal.meal_items?.map(item => item.food_name).join(", ") || "No items",
-      calories: meal.total_calories || meal.meal_items?.reduce((sum, item) => sum + (item.calories || 0), 0) || 0,
-      time: meal.meal_time || "Not specified"
-    }));
+    // Group meals by type and create meal options
+    const mealGroups = {};
     
+    currentPlan.meals.forEach(meal => {
+      const mealType = meal.meal_type.charAt(0).toUpperCase() + meal.meal_type.slice(1).toLowerCase();
+      
+      if (!mealGroups[mealType]) {
+        mealGroups[mealType] = {
+          id: meal.id,
+          mealType: mealType,
+          options: [],
+          totalCalories: 0
+        };
+      }
+      
+      // Create meal option
+      const mealOption = {
+        id: meal.id,
+        food: meal.meal_items?.map(item => item.food_name).join(", ") || "No items",
+        calories: meal.meal_items?.reduce((sum, item) => sum + (item.calories || 0), 0) || 0,
+        time: meal.meal_time || "Not specified",
+        selected: false
+      };
+      
+      mealGroups[mealType].options.push(mealOption);
+      mealGroups[mealType].totalCalories += mealOption.calories;
+    });
+    
+    const dietData = Object.values(mealGroups);
     console.log("Final diet data:", dietData);
     return dietData;
   };
@@ -140,6 +162,14 @@ const Dashboard = () => {
     });
   };
 
+  // Handle meal selection
+  const handleMealSelection = (mealType, mealId) => {
+    setSelectedMeals(prev => ({
+      ...prev,
+      [mealType]: mealId
+    }));
+  };
+
   if (loading) {
     return (
       <div className="dashboard">
@@ -166,7 +196,7 @@ const Dashboard = () => {
   }
 
   const workoutDataByDay = getWorkoutDataByDay();
-  const dietData = getDietData();
+  const dietDataByMeal = getDietDataByMeal();
 
   return (
     <div className="dashboard">
@@ -305,18 +335,58 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="diet-content">
-              <h3>Today's Meal Plan</h3>
-              {dietData.length > 0 ? (
-                <div className="diet-list">
-                  {dietData.map((meal) => (
-                    <div key={meal.id} className="diet-item">
-                      <div className="meal-info">
-                        <h4>{meal.meal}</h4>
-                        <p>{meal.food}</p>
-                        <span className="time">{meal.time}</span>
+              <div className="diet-header">
+                <h3>Today's Meal Plan</h3>
+                <div className="diet-controls">
+                  <button 
+                    className="select-all-btn"
+                    onClick={() => {
+                      const allSelected = {};
+                      dietDataByMeal.forEach(mealGroup => {
+                        if (mealGroup.options.length > 0) {
+                          allSelected[mealGroup.mealType] = mealGroup.options[0].id;
+                        }
+                      });
+                      setSelectedMeals(allSelected);
+                    }}
+                  >
+                    Select All
+                  </button>
+                  <button 
+                    className="clear-all-btn"
+                    onClick={() => setSelectedMeals({})}
+                  >
+                    Clear All
+                  </button>
+                </div>
+              </div>
+              {dietDataByMeal.length > 0 ? (
+                <div className="diet-meals-list">
+                  {dietDataByMeal.map((mealGroup) => (
+                    <div key={mealGroup.id} className="meal-group">
+                      <div className="meal-group-header">
+                        <h4>{mealGroup.mealType}</h4>
+                        <span className="total-calories">{mealGroup.totalCalories} cal</span>
                       </div>
-                      <div className="calories">
-                        {meal.calories} cal
+                      <div className="meal-options">
+                        {mealGroup.options.map((option) => (
+                          <div 
+                            key={option.id} 
+                            className={`meal-option ${selectedMeals[mealGroup.mealType] === option.id ? 'selected' : ''}`}
+                            onClick={() => handleMealSelection(mealGroup.mealType, option.id)}
+                          >
+                            <div className="meal-option-info">
+                              <p className="food-description">{option.food}</p>
+                              <span className="meal-time">{option.time}</span>
+                            </div>
+                            <div className="meal-option-calories">
+                              {option.calories} cal
+                            </div>
+                            <div className="selection-indicator">
+                              {selectedMeals[mealGroup.mealType] === option.id ? '✓' : '○'}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   ))}
