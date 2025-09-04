@@ -1,0 +1,37 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+.content {
+  padding-top: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  /* When sidebar is open on mobile, don't shift the main content */
+  .sidebar.open ~ .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Ensure the toggle button is visible on mobile */
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: block !important;
+  }
+}
+
+
