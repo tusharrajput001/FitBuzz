@@ -1,5 +1,5 @@
 .sidebar {
-  width: 60px;
+  width: 60px; /* Collapsed width */
   height: 100vh;
   color: white;
   position: fixed;
@@ -8,21 +8,29 @@
   z-index: 1000;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  background: transparent;
+  overflow: hidden; 
 }
 
 
+.sidebar.open {
+  width: 10rem; 
+}
+
 .sidebar-nav {
-  padding: 20px 0;
+  padding: 6rem 0 20px 0;
 }
 
 .sidebar-item {
   display: flex;
-  align-items: center;
-  padding: 15px 20px;
+  flex-direction: row; /* Stack icon and label vertically */
+  align-items: center; /* Center align items */
+  padding: 15px 10px; /* Reduced horizontal padding */
   color: white;
   text-decoration: none;
   transition: all 0.3s ease;
   border-left: 3px solid transparent;
+  text-align: left; /* Center text */
 }
 
 .sidebar-item:hover {
@@ -37,16 +45,33 @@
 }
 
 .sidebar-icon {
-  font-size: 20px;
-  margin-right: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  font-size: 22px;
+  margin-right: 8px; /* Remove right margin since label is below */
+  margin-bottom: 5px; /* Add bottom margin for spacing */
   width: 24px;
   text-align: center;
+  flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
 .sidebar-label {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.5px;
+  opacity: 0; /* Hide labels by default */
+  transform: translateY(-10px); /* Move up instead of left */
+  transition: all 0.3s ease;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Show labels when sidebar is open */
+.sidebar.open .sidebar-label {
+  opacity: 1;
+  transform: translateY(0); /* Move to normal position */
 }
 
 /* Responsive design */
@@ -58,6 +83,12 @@
   
   .sidebar.open {
     transform: translateX(0);
+  }
+  
+  /* On mobile, always show labels when sidebar is open */
+  .sidebar.open .sidebar-label {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

@@ -74,12 +74,12 @@ const Navbar = () => {
           ) : (
             // Show Dashboard, Profile button and Logout when user is authenticated
             <>
-              <button
+              {/* <button
                 className="btn-outline"
                 onClick={() => navigate("/dashboard")}
               >
                 Dashboard
-              </button>
+              </button> */}
               <button
                 className="btn-outline"
                 onClick={() => navigate("/profile")}
