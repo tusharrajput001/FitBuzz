@@ -49,6 +49,20 @@ const Form3 = ({ formData, handleChange }) => {
           <option value="Advanced">Advanced</option>
         </select>
       </div>
+      <div className="form-field">
+        <h2>Workout Days Per Week <span className="required">*</span></h2>
+        <input 
+          type="number" 
+          name="workoutDaysInWeek" 
+          value={formData.workoutDaysInWeek} 
+          onChange={handleChange} 
+          placeholder="Enter number of days (1-7)"
+          min="1"
+          max="7"
+          required
+          className={formData.workoutDaysInWeek ? "filled" : ""}
+        />
+      </div>
     </div>
   );
 };

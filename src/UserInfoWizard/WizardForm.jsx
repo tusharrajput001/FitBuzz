@@ -20,6 +20,7 @@ const WizardForm = () => {
     goal: "",
     diet_preference: "",
     workout: "",
+    workoutDaysInWeek: "",
   });
 
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const WizardForm = () => {
   ];
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });  
   };
 
   const validateCurrentStep = () => {
@@ -41,7 +42,7 @@ const WizardForm = () => {
       case 2:
         return formData.height && formData.weight;
       case 3:
-        return formData.goal && formData.diet_preference && formData.workout;
+        return formData.goal && formData.diet_preference && formData.workout && formData.workoutDaysInWeek;
       default:
         return true;
     }
@@ -58,7 +59,7 @@ const WizardForm = () => {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const validateForm = () => {
-    const requiredFields = ['name', 'age', 'gender', 'height', 'weight', 'goal', 'diet_preference', 'workout'];
+    const requiredFields = ['name', 'age', 'gender', 'height', 'weight', 'goal', 'diet_preference', 'workout', 'workoutDaysInWeek'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     
     if (missingFields.length > 0) {
@@ -82,6 +83,11 @@ const WizardForm = () => {
       return false;
     }
 
+    if (formData.workoutDaysInWeek < 1 || formData.workoutDaysInWeek > 7) {
+      alert("Workout days per week must be between 1 and 7");
+      return false;
+    }
+
     return true;
   };
 
@@ -98,7 +104,8 @@ const WizardForm = () => {
         ...formData,
         age: parseInt(formData.age),
         height: parseInt(formData.height),
-        weight: parseFloat(formData.weight)
+        weight: parseFloat(formData.weight),
+        workoutDaysInWeek: parseInt(formData.workoutDaysInWeek)
       };
       
       console.log("Submitting form data:", apiData);
@@ -111,7 +118,7 @@ const WizardForm = () => {
       console.log("Response structure:", JSON.stringify(response, null, 2));
       
       // Validate that we have the required data structure
-      if (!response || !response.workout_plan || !response.diet_plan) {
+      if (!response || !response.output || !response.output.workout_days || !response.output.meals) {
         console.error("Invalid response structure:", response);
         throw new Error("Generated plan does not have the expected structure");
       }
@@ -121,12 +128,12 @@ const WizardForm = () => {
         const token = authService.getToken();
         if (token) {
           console.log("Saving plan to database with data:", {
-            workout_plan: response.workout_plan,
-            diet_plan: response.diet_plan
+            workout_days: response.output.workout_days,
+            meals: response.output.meals
           });
           
           console.log("Saving original generated plan to database");
-          const saveResponse = await workoutDietService.savePlan(response, token);
+          const saveResponse = await workoutDietService.savePlan(response.output, token);
           console.log("Plan saved to database:", saveResponse);
           
           // Store the plan ID for future reference
@@ -139,7 +146,7 @@ const WizardForm = () => {
       }
       
       // Store the generated plan data in localStorage for use in dashboard
-      localStorage.setItem('userPlan', JSON.stringify(response));
+      localStorage.setItem('userPlan', JSON.stringify(response.output));
       
       // Navigate to dashboard after successful response
       navigate('/dashboard');
