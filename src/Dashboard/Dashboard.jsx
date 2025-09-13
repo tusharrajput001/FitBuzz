@@ -201,7 +201,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       {/* Charts Section */}
-      <div className="charts-section">
+      {/* <div className="charts-section">
         <div className="charts-placeholder">
           <h2>CHARTS</h2>
           <p>Charts and graphs will be displayed here</p>
@@ -209,7 +209,7 @@ const Dashboard = () => {
 
           
         </div>
-      </div>
+      </div> */}
 
       {/* Fitness Plans Section */}
       {plans.length > 0 && (
