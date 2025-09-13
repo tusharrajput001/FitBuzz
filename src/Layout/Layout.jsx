@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
       
       <Sidebar isOpen={sidebarOpen} />
       
-      <div className={`main-content ${!sidebarOpen ? 'sidebar-closed' : ''}`}>
+      <div className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <Navbar />
         <main className="content">
           {children}

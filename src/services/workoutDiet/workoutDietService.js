@@ -42,8 +42,8 @@ class WorkoutDietService {
       console.log("planData stringified:", JSON.stringify(planData, null, 2));
       
       // Ensure we have the required fields
-      if (!planData || !planData.workout_plan || !planData.diet_plan) {
-        throw new Error("Invalid plan data structure. Missing workout_plan or diet_plan");
+      if (!planData || !planData.workout_days || !planData.meals) {
+        throw new Error("Invalid plan data structure. Missing workout_days or meals");
       }
       
       console.log("Making axios POST request to:", `${BACKEND_URL}/api/plans`);
