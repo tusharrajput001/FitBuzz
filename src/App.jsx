@@ -6,6 +6,7 @@ import Signup from "./Signup/Signup";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile/Profile";
 import WizardForm from "./UserInfoWizard/WizardForm";
+import FoodScanner from "./FoodScanner/FoodScanner";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -49,6 +50,14 @@ function App() {
                     <h1>My Workout</h1>
                     <p>This is the My Workout page. Add your workout content here.</p>
                   </div>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/food-scanner" 
+              element={
+                <ProtectedRoute>
+                  <FoodScanner />
                 </ProtectedRoute>
               } 
             />
