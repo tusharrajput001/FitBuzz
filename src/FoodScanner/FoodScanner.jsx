@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
 import './FoodScanner.css';
 import { FaCamera, FaUpload, FaSpinner } from 'react-icons/fa';
+import foodAnalysisService from '../services/foodAnalysis/foodAnalysisService';
+import FoodAnalysisModal from './FoodAnalysisModal';
 
 const FoodScanner = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Validate the file
+      const validation = foodAnalysisService.validateImageFile(file);
+      if (!validation.isValid) {
+        setError(validation.error);
+        return;
+      }
+
+      // Clear any previous errors
+      setError(null);
+      
       const reader = new FileReader();
       reader.onload = (e) => {
         setSelectedImage(e.target.result);
+        setSelectedFile(file);
         setAnalysisResult(null);
       };
       reader.readAsDataURL(file);
@@ -20,22 +36,23 @@ const FoodScanner = () => {
   };
 
   const handleAnalyze = async () => {
-    if (!selectedImage) return;
+    if (!selectedFile) return;
     
     setIsAnalyzing(true);
+    setError(null);
     
-    // Simulate API call for food analysis
-    setTimeout(() => {
-      setAnalysisResult({
-        foodName: "Grilled Chicken Breast",
-        calories: 165,
-        protein: 31,
-        carbs: 0,
-        fat: 3.6,
-        confidence: 92
-      });
+    try {
+      // Call the real API
+      const result = await foodAnalysisService.analyzeFoodImage(selectedFile);
+      
+      setAnalysisResult(result);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Analysis failed:', error);
+      setError(error.message);
+    } finally {
       setIsAnalyzing(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -97,39 +114,23 @@ const FoodScanner = () => {
               )}
             </button>
           )}
+
+          {error && (
+            <div className="error-message">
+              <p>{error}</p>
+            </div>
+          )}
         </div>
 
-        {analysisResult && (
-          <div className="analysis-result">
-            <h2>Analysis Results</h2>
-            <div className="result-card">
-              <div className="food-info">
-                <h3>{analysisResult.foodName}</h3>
-                <span className="confidence">Confidence: {analysisResult.confidence}%</span>
-              </div>
-              
-              <div className="nutrition-grid">
-                <div className="nutrition-item">
-                  <span className="nutrition-label">Calories</span>
-                  <span className="nutrition-value">{analysisResult.calories}</span>
-                </div>
-                <div className="nutrition-item">
-                  <span className="nutrition-label">Protein</span>
-                  <span className="nutrition-value">{analysisResult.protein}g</span>
-                </div>
-                <div className="nutrition-item">
-                  <span className="nutrition-label">Carbs</span>
-                  <span className="nutrition-value">{analysisResult.carbs}g</span>
-                </div>
-                <div className="nutrition-item">
-                  <span className="nutrition-label">Fat</span>
-                  <span className="nutrition-value">{analysisResult.fat}g</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Analysis Results Modal */}
+      <FoodAnalysisModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        analysisData={analysisResult}
+        imagePreview={selectedImage}
+      />
     </div>
   );
 };
