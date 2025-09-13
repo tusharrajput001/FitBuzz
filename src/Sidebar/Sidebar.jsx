@@ -10,7 +10,7 @@ const Sidebar = ({ isOpen }) => {
 
   const menuItems = [
     { path: '/dashboard', label: 'HOME', icon: <AiFillHome /> },
-    { path: '/my-workout', label: 'CALORIES', icon: <CgGym /> },
+    // { path: '/my-workout', label: 'CALORIES', icon: <CgGym /> }, 
     { path: '/food-scanner', label: 'FOOD SCANNER', icon: <FaCamera /> },
     // { path: '/my-food', label: 'MY FOOD', icon: '🍎' },
     // { path: '/log-food', label: 'LOG FOOD', icon: '📝' },
