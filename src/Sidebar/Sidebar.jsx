@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 import { AiFillHome } from "react-icons/ai";
 import { CgGym } from "react-icons/cg";
+import { FaCamera } from "react-icons/fa";
 
 const Sidebar = ({ isOpen }) => {
   const location = useLocation();
@@ -10,6 +11,7 @@ const Sidebar = ({ isOpen }) => {
   const menuItems = [
     { path: '/dashboard', label: 'HOME', icon: <AiFillHome /> },
     { path: '/my-workout', label: 'CALORIES', icon: <CgGym /> },
+    { path: '/food-scanner', label: 'FOOD SCANNER', icon: <FaCamera /> },
     // { path: '/my-food', label: 'MY FOOD', icon: '🍎' },
     // { path: '/log-food', label: 'LOG FOOD', icon: '📝' },
     // { path: '/log-workout', label: 'LOG WORKOUT', icon: '📊' },
