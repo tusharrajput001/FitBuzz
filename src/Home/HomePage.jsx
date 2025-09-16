@@ -159,7 +159,7 @@ const HomePage = () => {
             </section>
 
             {/* Features Section */}
-            <section className="features-section">
+            <section className="features-section">  
                 <div className="container">
                     <h2 className="section-title">Why Choose FitBuzz AI?</h2>
                     <div className="features-grid">
@@ -173,17 +173,17 @@ const HomePage = () => {
                             <h3>Quick & Easy Setup</h3>
                             <p>Answer a few simple questions and get your customized workout and nutrition plan in minutes.</p>
                         </div>
-                        <div className="feature-card">
+                        {/* <div className="feature-card">
                             <div className="feature-icon">📊</div>
                             <h3>Progress Tracking</h3>
                             <p>Monitor your fitness journey with detailed analytics and progress reports.</p>
-                        </div>
+                        </div> */}
                         <div className="feature-card">
                             <div className="feature-icon">🎯</div>
                             <h3>Goal-Oriented Plans</h3>
                             <p>Whether you want to lose weight, build muscle, or improve endurance, we've got you covered.</p>
                         </div>
-                        <div className="feature-card">
+                        {/* <div className="feature-card">
                             <div className="feature-icon">🔄</div>
                             <h3>Adaptive Updates</h3>
                             <p>Your plans evolve with your progress, ensuring continuous improvement and motivation.</p>
@@ -192,7 +192,7 @@ const HomePage = () => {
                             <div className="feature-icon">🏆</div>
                             <h3>Proven Results</h3>
                             <p>Join thousands of users who have achieved their fitness goals with our AI-powered approach.</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -253,34 +253,7 @@ const HomePage = () => {
                             </div>
                         </div>
                         
-                        <div className="ai-feature-card">
-                            <div className="ai-feature-visual">
-                                <div className="logging-demo">
-                                    <div className="log-entry">
-                                        <div className="log-icon">💪</div>
-                                        <div className="log-text">Bench Press: 3x8 @ 135lbs</div>
-                                    </div>
-                                    <div className="log-entry">
-                                        <div className="log-icon">🥗</div>
-                                        <div className="log-text">Grilled Chicken Salad: 450 cal</div>
-                                    </div>
-                                    <div className="log-entry">
-                                        <div className="log-icon">📏</div>
-                                        <div className="log-text">Weight: 165lbs (-2lbs this week)</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="ai-feature-content">
-                                <h3>Smart Logging</h3>
-                                <p>Easily log your workouts and meals with AI assistance. Our smart logging system learns your patterns and provides intelligent suggestions.</p>
-                                <ul className="feature-list">
-                                    <li>Workout logging</li>
-                                    <li>Food diary</li>
-                                    <li>Progress tracking</li>
-                                    <li>AI suggestions</li>
-                                </ul>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </section>

@@ -81,10 +81,11 @@ const Navbar = () => {
                 Dashboard
               </button> */}
               <button
-                className="btn-outline"
+                className="btn-outline profile-icon-btn"
                 onClick={() => navigate("/profile")}
+                aria-label="Profile"
               >
-                <CgProfile /> Profile
+                <CgProfile />
               </button>
               {/* <button className="btn-fill" onClick={handleLogout}>
                 Logout
