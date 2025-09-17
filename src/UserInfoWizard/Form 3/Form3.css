@@ -217,6 +217,46 @@
   background: rgba(0, 212, 255, 0.2);
 }
 
+/* Number input styling for Workout Days Per Week */
+.form3-container .form-field input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form3-container .form-field input[type="number"]:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.form3-container .form-field input[type="number"].filled {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+/* Placeholder color */
+.form3-container .form-field input[type="number"]::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Remove default spinners for consistency */
+.form3-container .form-field input[type="number"]::-webkit-outer-spin-button,
+.form3-container .form-field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form3-container .form-field input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 /* Animation */
 @keyframes fadeIn {
   from {
@@ -236,6 +276,11 @@
   }
   
   .form3-container .form-field select {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .form3-container .form-field input[type="number"] {
     padding: 10px;
     font-size: 14px;
   }

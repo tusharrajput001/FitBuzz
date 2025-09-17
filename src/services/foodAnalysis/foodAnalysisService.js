@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5678';
+
+const rawBaseUrl = import.meta?.env?.VITE_N8N_URL;
+const API_BASE_URL = rawBaseUrl.replace(/\/$/, ''); 
 
 class FoodAnalysisService {
   /**
