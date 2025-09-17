@@ -56,6 +56,24 @@ button {
   overflow: hidden;
 }
 
+/* Circular profile icon button */
+.nav-buttons .profile-icon-btn {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  color: #00bfff; /* ensure icon visible */
+}
+
+.nav-buttons .profile-icon-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
 /* Outline button */
 .btn-outline {
   background: rgba(255, 255, 255, 0.1);
@@ -112,6 +130,11 @@ button {
   button {
     font-size: 0.85rem;
     padding: 5px 14px;
+  }
+
+  .nav-buttons .profile-icon-btn {
+    width: 36px;
+    height: 36px;
   }
 }
   
