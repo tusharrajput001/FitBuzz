@@ -9,7 +9,7 @@
   top: 14px;
   left: 17px;
   z-index: 1001;
-  background: #00bfff;
+  background: transparent ;
   border: none;
   color: white;
   padding: 9px 13px;
@@ -17,13 +17,13 @@
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  /* box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); */
   transition: all 0.3s ease;
   display: block;
 }
 
 .sidebar-toggle:hover {
-  background: #0f141f;
+  /* background: #0f141f; */
   /* transform: translateY(-2px); */
   /* box-shadow: 0 6px 16px #00bfff; */
 }
