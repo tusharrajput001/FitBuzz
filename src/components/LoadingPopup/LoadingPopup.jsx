@@ -10,7 +10,7 @@ const LoadingPopup = ({ isVisible, message = "Generating plan..." }) => {
       <div className="loading-popup">
         <div className="loading-lottie">
           <DotLottieReact
-            src="https://lottie.host/89615416-e785-464f-954b-8280dfdd59bf/kV6x9fxhsh.lottie"
+            src="https://lottie.host/f8acf606-a67e-4717-ad4a-1dbdf2106eab/8C0h8a6yZe.lottie"
             loop
             autoplay
             speed={1}
