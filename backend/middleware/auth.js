@@ -1,4 +1,4 @@
-const supabase = require('../db');
+const { supabase } = require('../db');
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
