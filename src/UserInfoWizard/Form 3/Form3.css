@@ -9,7 +9,7 @@
   align-items: center;
   padding: 2.5rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-  min-width: 350px;
+  min-width: 0;
   margin: 2rem auto;
   max-width: 500px;
   position: relative;
@@ -161,6 +161,24 @@
   .wizard-btn {
     width: 100%;
   }
+}
+
+@media (max-width: 480px) {
+  .wizard-form-container { padding: 0.5rem; margin: 0.25rem; max-width: 100%; box-sizing: border-box; }
+  .wizard-title { font-size: 18px; }
+  .form3-container .form-field { margin-bottom: 0.75rem; }
+  .form3-container .form-field h2 { font-size: 14px; margin-bottom: 0.25rem; }
+  .form3-container .form-field select, 
+  .form3-container .form-field input[type="number"] { font-size: 16px; padding: 8px; }
+}
+
+@media (max-width: 360px) {
+  .wizard-form-container { padding: 0.4rem; margin: 0.2rem; }
+  .wizard-title { font-size: 16px; }
+  .form3-container .form-field { margin-bottom: 0.5rem; }
+  .form3-container .form-field h2 { font-size: 13px; }
+  .form3-container .form-field select, 
+  .form3-container .form-field input[type="number"] { padding: 7px; }
 }
 
 .form3-container {

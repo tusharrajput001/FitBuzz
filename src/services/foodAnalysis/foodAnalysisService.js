@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const rawBaseUrl = import.meta?.env?.VITE_N8N_URL;
-const API_BASE_URL = rawBaseUrl;
+const API_BASE_URL = rawBaseUrl;    
 
 class FoodAnalysisService {
   /**
