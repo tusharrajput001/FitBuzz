@@ -270,7 +270,7 @@ router.post('/refresh', async (req, res) => {
                 email: data.user.email,
                 fullName: data.user.user_metadata?.full_name
             },
-            session: data.session
+            session: data.session 
         });
 
     } catch (error) {
