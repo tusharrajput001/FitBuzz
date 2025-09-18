@@ -1,5 +1,5 @@
 const express = require('express');
-const supabase = require('../db');
+const { supabase, supabaseAdmin } = require('../db');
 
 const router = express.Router();
 
@@ -75,7 +75,10 @@ router.post('/signup', async (req, res) => {
                 id: data.user.id,
                 email: data.user.email,
                 fullName: data.user.user_metadata?.full_name
-            }
+            },
+            session: data.session,
+            token: data.session?.access_token,
+            refreshToken: data.session?.refresh_token
         });
 
     } catch (error) {
@@ -113,6 +116,16 @@ router.post('/login', async (req, res) => {
             }
         }
 
+        console.log('Login successful, session data:', {
+            hasSession: !!data.session,
+            hasAccessToken: !!data.session?.access_token,
+            hasRefreshToken: !!data.session?.refresh_token,
+            accessTokenPreview: data.session?.access_token?.substring(0, 20) + '...',
+            refreshTokenPreview: data.session?.refresh_token?.substring(0, 20) + '...',
+            refreshTokenLength: data.session?.refresh_token?.length,
+            refreshTokenType: typeof data.session?.refresh_token
+        });
+
         res.json({
             message: 'Login successful',
             user: {
@@ -120,7 +133,9 @@ router.post('/login', async (req, res) => {
                 email: data.user.email,
                 fullName: data.user.user_metadata?.full_name
             },
-            session: data.session
+            session: data.session,
+            token: data.session.access_token,
+            refreshToken: data.session.refresh_token
         });
 
     } catch (error) {
@@ -150,6 +165,116 @@ router.post('/logout', async (req, res) => {
         res.json({ message: 'Logged out successfully' });
     } catch (error) {
         console.error('Logout error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Test endpoint to verify backend is working
+router.get('/test', (req, res) => {
+    console.log('Test endpoint hit!');
+    res.json({ message: 'Backend is working!' });
+});
+
+// Refresh token endpoint
+router.post('/refresh', async (req, res) => {
+    console.log('=== REFRESH ENDPOINT HIT ===');
+    console.log('Request headers:', req.headers);
+    console.log('Request body:', req.body);
+    
+    try {
+        // Extract token from Authorization header
+        const authHeader = req.headers['authorization'];
+        const refreshToken = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        console.log('Refresh endpoint called with token:', refreshToken ? refreshToken.substring(0, 20) + '...' : 'None');
+        console.log('Refresh token length:', refreshToken?.length);
+        console.log('Refresh token type:', typeof refreshToken);
+
+        if (!refreshToken) {
+            return res.status(401).json({ error: 'Refresh token required' });
+        }
+
+        // Try different approaches to refresh the session
+        console.log('Attempting refresh with token:', refreshToken.substring(0, 20) + '...');
+        
+        // Method 1: Try with refreshSession object
+        let { data, error } = await supabase.auth.refreshSession({
+            refresh_token: refreshToken
+        });
+
+        console.log('Method 1 - refreshSession response:', { data, error });
+
+        // If that fails, try Method 2: Set session first then refresh
+        if (error) {
+            console.log('Method 1 failed, trying Method 2...');
+            supabase.auth.setSession({
+                access_token: '', // Empty access token
+                refresh_token: refreshToken
+            });
+            
+            const refreshResult = await supabase.auth.refreshSession();
+            data = refreshResult.data;
+            error = refreshResult.error;
+            
+            console.log('Method 2 - setSession + refreshSession response:', { data, error });
+        }
+
+        // If still failing, try Method 3: Direct API call
+        if (error) {
+            console.log('Method 2 failed, trying Method 3...');
+            const response = await fetch(`${process.env.SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': process.env.SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${refreshToken}`
+                },
+                body: JSON.stringify({
+                    refresh_token: refreshToken
+                })
+            });
+            
+            const apiData = await response.json();
+            console.log('Method 3 - Direct API response:', apiData);
+            
+            if (response.ok && apiData.access_token) {
+                data = {
+                    session: {
+                        access_token: apiData.access_token,
+                        refresh_token: apiData.refresh_token,
+                        expires_in: apiData.expires_in,
+                        token_type: apiData.token_type
+                    },
+                    user: apiData.user
+                };
+                error = null;
+            } else {
+                error = { message: apiData.error_description || 'API refresh failed' };
+            }
+        }
+
+        if (error) {
+            console.error('Token refresh error:', error);
+            return res.status(401).json({ error: error.message || 'Invalid or expired refresh token' });
+        }
+
+        if (!data.session) {
+            console.error('No session in refresh response');
+            return res.status(401).json({ error: 'No session returned from refresh' });
+        }
+
+        res.json({
+            message: 'Token refreshed successfully',
+            user: {
+                id: data.user.id,
+                email: data.user.email,
+                fullName: data.user.user_metadata?.full_name
+            },
+            session: data.session
+        });
+
+    } catch (error) {
+        console.error('Token refresh error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import workoutDietService from "../services/workoutDiet/workoutDietService";
 import authService from "../services/auth/authService";
+// import TokenRefreshTest from "../components/TokenRefreshTest/TokenRefreshTest"; // Commented out for production
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("workout");
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [expandedDays, setExpandedDays] = useState(new Set());
   const [selectedMeals, setSelectedMeals] = useState({});
+  // const [showTokenTest, setShowTokenTest] = useState(false); // Commented out for production
 
   // Fetch user's plans from database
   useEffect(() => {
@@ -200,16 +202,21 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* Charts Section */}
-      {/* <div className="charts-section">
-        <div className="charts-placeholder">
-          <h2>CHARTS</h2>
-          <p>Charts and graphs will be displayed here</p>
-          
-
-          
+      {/* Token Refresh Test Section - Commented out for production */}
+      {/* 
+      <div className="token-test-section">
+        <div className="token-test-header">
+          <h2>Token Refresh Test</h2>
+          <button 
+            className="toggle-test-btn"
+            onClick={() => setShowTokenTest(!showTokenTest)}
+          >
+            {showTokenTest ? 'Hide Test' : 'Show Test'}
+          </button>
         </div>
-      </div> */}
+        {showTokenTest && <TokenRefreshTest />}
+      </div>
+      */}
 
       {/* Fitness Plans Section */}
       {plans.length > 0 && (
