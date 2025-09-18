@@ -31,7 +31,8 @@ const HomePage = () => {
                     </div>
                 </div>
                 
-                <div className="hero-content">
+                <div className="container">
+                    <div className="hero-content">
                     <div className="hero-text">
                         <h1 className="hero-title">
                             Transform Your Fitness Journey
@@ -92,6 +93,7 @@ const HomePage = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </section>
