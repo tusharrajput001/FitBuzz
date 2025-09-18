@@ -1,0 +1,1040 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Charts Section */
+.charts-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 30px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.charts-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Fitness Plans Section */
+.fitness-plans-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.fitness-plans-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.plans-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.plans-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+.plans-header h2::before {
+  content: "Your ";
+  color: white;
+}
+
+.plans-count {
+  background: #6c757d;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.plans-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  max-width: 100%;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 1200px) {
+  .plans-container {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .plans-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  
+  .plan-card {
+    padding: 12px;
+    min-height: 70px;
+  }
+  
+  .plan-name {
+    font-size: 0.9rem;
+  }
+}
+
+.plan-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.plan-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(0, 191, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.plan-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 30px rgba(0, 191, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(0, 191, 255, 0.5);
+}
+
+.plan-card:hover::before {
+  opacity: 1;
+}
+
+.plan-card.active {
+  background: rgba(0, 191, 255, 0.2);
+  border-color: rgba(0, 191, 255, 0.6);
+  box-shadow: 
+    0 8px 32px rgba(0, 191, 255, 0.2),
+    0 0 20px rgba(0, 191, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.plan-card.active::before {
+  background: linear-gradient(135deg, 
+    rgba(0, 191, 255, 0.2) 0%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  opacity: 1;
+}
+
+.plan-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.plan-name {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 600;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.active-badge {
+  background: rgba(0, 191, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 12px rgba(0, 191, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.active-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.2) 0%, 
+    rgba(0, 191, 255, 0.1) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.charts-placeholder {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.charts-placeholder h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.charts-placeholder p {
+  font-size: 1.1rem;
+  margin: 0 0 20px 0;
+  opacity: 0.8;
+}
+
+.generate-plan-btn {
+  background: linear-gradient(135deg, #00bfff, #009acd);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.generate-plan-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.4);
+}
+
+.generate-plan-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.generation-message {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: rgba(0, 191, 255, 0.1);
+  color: #00bfff;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+/* Tabs Section */
+.tabs-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.tabs-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Tabs Header */
+.tabs-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: white;
+  padding: 20px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  flex: 1;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.tab-btn.active {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.tab-divider {
+  width: 2px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 10px;
+}
+
+.tab-arrow {
+  color: white;
+  font-size: 1.2rem;
+  margin-right: 20px;
+  opacity: 0.7;
+}
+
+/* Content Area */
+.content-area {
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  min-height: 400px;
+  position: relative;
+}
+
+.content-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.03) 0%, 
+    rgba(0, 191, 255, 0.02) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.content-area h3 {
+  margin: 0 0 25px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Workout Content */
+.workout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.workout-header h3 {
+  margin: 0;
+}
+
+.workout-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.expand-btn, .collapse-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.expand-btn:hover, .collapse-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.workout-days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.workout-day {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.workout-day::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.workout-day:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(0, 191, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.day-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: white;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.day-header:hover {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.day-header.rest-day-header {
+  background: rgba(108, 117, 125, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.day-header.rest-day-header:hover {
+  background: rgba(108, 117, 125, 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.day-info h4 {
+  margin: 0 0 8px 0;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.day-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.day-info .focus-area {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.exercise-count {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.day-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.day-exercises {
+  padding: 20px;
+  background: #f8f9fa;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+.day-exercises .workout-item {
+  margin-bottom: 10px;
+}
+
+.day-exercises .workout-item:last-child {
+  margin-bottom: 0;
+}
+
+.day-exercises .exercise-info h5 {
+  margin: 0 0 5px 0;
+  color: #495057;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.workout-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-left: 4px solid #e9ecef;
+}
+
+.workout-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.workout-item.completed {
+  border-left-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+}
+
+.workout-item.rest-day {
+  border-left-color: #6c757d;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.workout-item.rest-day .exercise-info h4 {
+  color: #6c757d;
+}
+
+.rest-day-text {
+  color: #6c757d;
+  font-style: italic;
+  margin: 0;
+}
+
+.duration-unit {
+  color: #6c757d;
+  font-size: 0.8rem;
+  margin-left: 2px;
+}
+
+.exercise-info h4 {
+  margin: 0 0 5px 0;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.exercise-info p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.status {
+  font-size: 1.5rem;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.workout-item:not(.completed) .status {
+  color: #6c757d;
+}
+
+/* Diet Content */
+.diet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.diet-header h3 {
+  margin: 0;
+}
+
+.diet-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.select-all-btn, .clear-all-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select-all-btn:hover, .clear-all-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.diet-meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.meal-group {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.meal-group-header {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-group-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.total-calories {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.meal-options {
+  padding: 20px;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meal-option {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.meal-option:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-color: #ffc107;
+}
+
+.meal-option.selected {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+}
+
+.meal-option-info {
+  flex: 1;
+}
+
+.food-description {
+  margin: 0 0 5px 0;
+  color: #495057;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.meal-time {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.meal-option-calories {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.selection-indicator {
+  font-size: 1.2rem;
+  color: #28a745;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.meal-option:not(.selected) .selection-indicator {
+  color: #6c757d;
+}
+
+/* Legacy diet styles for backward compatibility */
+.diet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.diet-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-left: 4px solid #ffc107;
+}
+
+.diet-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.meal-info h4 {
+  margin: 0 0 5px 0;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.meal-info p {
+  margin: 0 0 5px 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.time {
+  color: #adb5bd;
+  font-size: 0.8rem;
+}
+
+.calories {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+
+
+/* Loading States */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #fff;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-top: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #fff;
+  text-align: center;
+}
+
+.error-container h2 {
+  color: #ff6b6b;
+  margin-bottom: 10px;
+}
+
+.retry-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.retry-btn:hover {
+  background: #0056b3;
+}
+
+/* No Data States */
+.no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+}
+
+.no-data p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Focus Area Display */
+.focus-area {
+  display: inline-block;
+  background: rgba(0, 123, 255, 0.2);
+  color: #007bff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Enhanced Workout Items */
+.workout-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid #007bff;
+}
+
+.workout-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.workout-item.completed {
+  border-left-color: #28a745;
+  opacity: 0.8;
+}
+
+.workout-item.completed .status {
+  color: #28a745;
+}
+
+/* Enhanced Diet Items */
+.diet-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid #ff6b6b;
+}
+
+.diet-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 15px;
+  }
+  
+  .charts-section {
+    padding: 30px 20px;
+  }
+  
+  .charts-placeholder h2 {
+    font-size: 2rem;
+  }
+  
+  .tab-btn {
+    padding: 15px 20px;
+    font-size: 1rem;
+  }
+  
+  .content-area {
+    padding: 20px;
+  }
+  
+  .workout-item,
+  .diet-item {
+    padding: 15px;
+  }
+  
+  .meal-info h4,
+  .exercise-info h4 {
+    font-size: 1rem;
+  }
+
+  .plan-selector {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .plan-dropdown {
+    min-width: auto;
+  }
+}

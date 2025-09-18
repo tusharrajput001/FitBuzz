@@ -1,0 +1,119 @@
+.signup-container {
+  background: rgba(255, 254, 254, 0.15); 
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  margin: 2rem auto;
+  max-width: 400px;
+}
+
+.signup-container > h2 {
+  color: white; 
+  margin-bottom: 1.5rem;
+  font-size: 30px;
+  text-align: center;
+}
+
+.signup-container > div {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.signup-container > div > input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.signup-container > div > input::placeholder {
+  color: rgba(228, 227, 227, 0.7);
+}
+
+.signup-container > div > input:focus {
+  border-color: linear-gradient(135deg, #00d4ff, #87ceeb);
+}
+
+.signup-btn {
+  background: linear-gradient(135deg, #00d4ff, #87ceeb);
+  border: none;
+  padding: 12px 24px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: 0.3s;
+  height: 50px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.signup-btn:hover {
+  background: linear-gradient(135deg, #00d4ff, #87ceeb);
+}
+
+.signup-container > p {
+  color: white;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.signup-container > p > span {
+  color: #00d4ff;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.signup-container > p > span:hover {
+  color: #00d4ff;
+  transform: scale(1.2);
+  font-weight: 400;
+}
+
+.signup-container > p > a {
+  color: #00d4ff;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.signup-container > p > a:hover {
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .signup-container {
+    padding: 1.5rem;
+    min-width: 250px;
+  }
+  
+  .signup-container > h2 {
+    font-size: 24px;
+  }
+  
+  .signup-container > div > input {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .signup-btn {
+    height: 45px;
+    font-size: 14px;
+  }
+}

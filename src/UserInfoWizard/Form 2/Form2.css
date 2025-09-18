@@ -1,0 +1,74 @@
+.form2-container {
+  width: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.form2-container .form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form2-container .form-field h2 {
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.form2-container .form-field h2 .required {
+  color: #ff6b6b;
+  margin-left: 4px;
+}
+
+.form2-container .form-field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form2-container .form-field input::placeholder {
+  color: rgba(198, 198, 198, 0.7);
+}
+
+.form2-container .form-field input:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.form2-container .form-field input.filled {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .form2-container .form-field h2 {
+    font-size: 16px;
+  }
+  
+  .form2-container .form-field input {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+
+

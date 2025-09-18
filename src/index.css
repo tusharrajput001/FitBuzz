@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Geist", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+html {
+  overflow-x: hidden; /* Prevent horizontal scrollbar at html level */
+}
+
+/* wrapper to keep content centered and not 100% wide */
+.app-wrapper {
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+/* Full width pages (like homepage) */
+.app-wrapper .home-page {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+/* Constrained pages (like signin/signup) */
+.app-wrapper .signin-page,
+.app-wrapper .signup-page {
+  max-width: 1280px;       
+  margin: 0 auto;        
+  padding: 20px;
+}
+
+/* Optional shrink when very large screens for constrained pages */
+@media screen and (min-width: 1600px) {
+  .app-wrapper .signin-page,
+  .app-wrapper .signup-page {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  /* Mobile styles */
+  .app-wrapper .signin-page,
+  .app-wrapper .signup-page {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet styles */
+}
+
+@media (min-width: 1025px) {
+  /* Desktop styles */
+}

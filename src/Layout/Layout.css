@@ -1,0 +1,78 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  top: 14px;
+  left: 17px;
+  z-index: 1001;
+  background: transparent ;
+  border: none;
+  color: white;
+  padding: 9px 13px;
+  /* border-radius: 8px; */
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  /* box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); */
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.sidebar-toggle:hover {
+  /* background: #0f141f; */
+  /* transform: translateY(-2px); */
+  /* box-shadow: 0 6px 16px #00bfff; */
+}
+
+.sidebar-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 60px; /* Match the sidebar width */
+  transition: margin-left 0.3s ease;
+}
+
+
+/* .main-content.sidebar-closed {
+  margin-left: 60px; 
+} */
+
+.content {
+  padding-top: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  /* .main-content.sidebar-closed {
+    margin-left: 60px; 
+  } */
+  
+  .sidebar-toggle {
+    top: 8px;
+    left: 15px;
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+}
+
+/* Desktop: Show button when sidebar is collapsed */
+@media (min-width: 769px) {
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+
