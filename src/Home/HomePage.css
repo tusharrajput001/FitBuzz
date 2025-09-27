@@ -856,45 +856,153 @@ html, body {
     }
     
     .hero-title {
-        font-size: 3rem;
+        font-size: clamp(2.5rem, 4vw + 1rem, 3.2rem);
     }
     
     .hero-stats {
         justify-content: center;
     }
     
-    .features-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .features-grid { 
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+        gap: 2rem;
+    }
     
-    .ai-features-grid { grid-template-columns: 1fr; }
+    .ai-features-grid { 
+        grid-template-columns: 1fr; 
+        gap: 2.5rem;
+    }
+}
+
+/* Tablet specific adjustments */
+@media (max-width: 900px) and (min-width: 769px) {
+    .hero-content {
+        gap: 2.5rem;
+    }
+    
+    .hero-title {
+        font-size: clamp(2.2rem, 3.5vw + 0.8rem, 2.8rem);
+    }
+    
+    .hero-stats {
+        gap: 2rem;
+        justify-content: center;
+    }
+    
+    .phone-mockup {
+        width: clamp(240px, 50vw, 300px);
+    }
+    
+    .wizard-mockup {
+        width: clamp(260px, 55vw, 340px);
+    }
+    
+    .wizard-showcase {
+        gap: 2.5rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
 }
 
 @media (max-width: 768px) {
     .floating-shapes { display: none; }
-    .hero-title { font-size: clamp(1.8rem, 5vw + 0.6rem, 2.5rem); }
+    
+    .hero-text{
+        margin-left: 1rem;
+    }
+    .section-title::after{
+        display: none;
+        font-size: 2.2rem;
+    }
+    .hero-section {
+        min-height: 80vh;
+        padding: 1.5rem 0;
+    }
+
+    .phone-mockup{
+        width: clamp(270px, 85vw, 676px)!important;
+        aspect-ratio: 6 / 6;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .hero-title { 
+        font-size: clamp(2rem, 4.5vw + 0.8rem, 2.8rem);
+        line-height: 1.2;
+    }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 1.5vw + 0.7rem, 1.15rem);
+        line-height: 1.5;
     }
     
     .hero-stats {
-        flex-direction: column;
-        gap: 1.5rem;
+        flex-direction: row;
+        gap: clamp(1rem, 4vw, 2rem);
+        justify-content: center;
+        flex-wrap: wrap;
     }
     
-    .phone-mockup { width: clamp(220px, 60vw, 260px); }
+    .stat {
+        min-width: 80px;
+    }
     
-    .wizard-mockup { width: clamp(240px, 70vw, 300px); }
+    .phone-mockup { 
+        width: clamp(220px, 55vw, 280px);
+        margin: 0 auto;
+    }
+    
+    .wizard-mockup { 
+        width: clamp(240px, 60vw, 320px);
+        margin: 0 auto;
+    }
+    
+    .wizard-showcase {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+    
+    .wizard-content h3 {
+        font-size: clamp(1.8rem, 3vw + 0.8rem, 2.2rem);
+    }
+    
+    .wizard-content p {
+        font-size: clamp(1rem, 1.2vw + 0.8rem, 1.1rem);
+    }
     
     .section-title {
-        font-size: 2rem;
+        font-size: clamp(1.8rem, 3.5vw + 0.8rem, 2.3rem);
     }
     
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .feature-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .ai-features-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
     
     .ai-feature-card {
-        padding: 2rem;
+        padding: 2rem 1.5rem;
+        flex-direction: column;
+    }
+    
+    .ai-feature-visual {
+        min-height: 180px;
     }
     
     .dashboard-demo {
@@ -903,109 +1011,284 @@ html, body {
     }
     
     .wizard-steps {
-        gap: 1rem;
+        gap: 1.2rem;
     }
     
     .wizard-step {
-        padding: 1rem;
+        padding: 1.2rem;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .step-number {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
     }
     
     .container {
-        padding-left: max(env(safe-area-inset-left), 1rem);
-        padding-right: max(env(safe-area-inset-right), 1rem);
+        padding-left: max(env(safe-area-inset-left), 1.25rem);
+        padding-right: max(env(safe-area-inset-right), 1.25rem);
     }
 }
 
 @media (max-width: 480px) {
     .home-page { overflow-x: hidden; }
+    
     .container { 
         padding-left: max(env(safe-area-inset-left), 1rem); 
         padding-right: max(env(safe-area-inset-right), 1rem); 
     }
+    
     .floating-shapes { display: none; }
-    .hero-section { min-height: auto; padding: 1.5rem 0 2rem; }
-    .hero-visual { display: none; }
-    .hero-stats { display: none; }
-    .wizard-visual { display: none; }
-    .ai-wizard-section { padding: 3rem 0; }
-    .ai-showcase-section { padding: 3rem 0; }
-    .features-section { padding: 3rem 0; }
-    .cta-section { padding: 3rem 0; }
+    
+    .hero-section { 
+        min-height: auto; 
+        padding: 1.5rem 0 2rem;
+    }
+    
+    .hero-visual { 
+        display: none;
+    }
+    
+    .hero-stats { 
+        display: none;
+    }
+    
+    .wizard-visual { 
+        display: none;
+    }
+    
+    .ai-wizard-section { 
+        padding: 3rem 0;
+    }
+    
+    .ai-showcase-section { 
+        padding: 3rem 0;
+    }
+    
+    .features-section { 
+        padding: 3rem 0;
+    }
+    
+    .cta-section { 
+        padding: 3rem 0;
+    }
+    
     .hero-title { 
         font-size: clamp(1.4rem, 5vw + 0.5rem, 1.8rem);
         line-height: 1.2;
+        margin-bottom: 1rem;
     }
     
     .hero-subtitle {
-        font-size: 0.9rem;
+        font-size: clamp(0.9rem, 2vw + 0.6rem, 1rem);
         line-height: 1.4;
+        margin-bottom: 1.5rem;
     }
     
-    .phone-mockup { width: clamp(200px, 80vw, 220px); }
+    .cta-button {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
     
-    .wizard-mockup { width: clamp(220px, 85vw, 250px); }
+    .phone-mockup { 
+        width: clamp(200px, 80vw, 220px);
+        margin: 0 auto;
+    }
+    
+    .wizard-mockup { 
+        width: clamp(220px, 85vw, 250px);
+        margin: 0 auto;
+    }
+    
+    .wizard-content h3 {
+        font-size: clamp(1.5rem, 4vw + 0.6rem, 1.8rem);
+    }
+    
+    .wizard-content p {
+        font-size: clamp(0.95rem, 2vw + 0.7rem, 1rem);
+    }
+    
+    .wizard-cta-button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .section-title {
+        font-size: clamp(1.6rem, 4vw + 0.8rem, 2rem);
+        margin-bottom: 2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
     
     .cta-content h2 {
-        font-size: 2rem;
+        font-size: clamp(1.6rem, 4vw + 0.8rem, 2rem);
+        margin-bottom: 1rem;
     }
     
     .cta-content p {
+        font-size: clamp(0.95rem, 2vw + 0.7rem, 1rem);
+        margin-bottom: 1.5rem;
+    }
+    
+    .cta-button-secondary {
+        padding: 1rem 1.5rem;
         font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .feature-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.4rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.95rem;
     }
     
     .ai-feature-card {
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+    }
+    
+    .ai-feature-visual {
+        min-height: 150px;
+    }
+    
+    .ai-feature-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .ai-feature-content p {
+        font-size: 0.95rem;
     }
     
     .wizard-step {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .step-content h4 {
+        font-size: 1.1rem;
+    }
+    
+    .step-content p {
+        font-size: 0.9rem;
     }
 }
 
+/* Small mobile devices */
 @media (max-width: 360px) {
     .container { 
         padding-left: max(env(safe-area-inset-left), 0.75rem); 
         padding-right: max(env(safe-area-inset-right), 0.75rem); 
     }
+    
     .hero-title { 
         font-size: clamp(1.2rem, 4vw + 0.3rem, 1.5rem);
         line-height: 1.1;
+        margin-bottom: 0.8rem;
     }
+    
     .hero-subtitle {
-        font-size: 0.85rem;
+        font-size: clamp(0.8rem, 2vw + 0.5rem, 0.85rem);
         line-height: 1.3;
+        margin-bottom: 1.2rem;
     }
+    
     .cta-button, .wizard-cta-button, .cta-button-secondary {
         padding: 0.8rem 1.2rem;
         font-size: 0.9rem;
+        max-width: 260px;
     }
+    
     .section-title {
         font-size: clamp(1.3rem, 4vw + 0.5rem, 1.6rem);
+        margin-bottom: 1.5rem;
     }
+    
+    .section-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+    
     .wizard-content h3 {
-        font-size: 1.5rem;
+        font-size: clamp(1.3rem, 3vw + 0.6rem, 1.5rem);
     }
+    
     .wizard-content p {
-        font-size: 0.9rem;
+        font-size: clamp(0.85rem, 2vw + 0.5rem, 0.9rem);
     }
+    
+    .feature-card {
+        padding: 1.2rem 0.8rem;
+    }
+    
     .feature-card h3 {
-        font-size: 1.3rem;
+        font-size: clamp(1.2rem, 3vw + 0.6rem, 1.3rem);
     }
+    
     .feature-card p {
-        font-size: 0.9rem;
+        font-size: clamp(0.85rem, 2vw + 0.5rem, 0.9rem);
     }
+    
+    .ai-feature-card {
+        padding: 1.2rem 0.8rem;
+    }
+    
     .ai-feature-content h3 {
-        font-size: 1.4rem;
+        font-size: clamp(1.3rem, 3vw + 0.6rem, 1.4rem);
     }
+    
     .ai-feature-content p {
-        font-size: 0.9rem;
+        font-size: clamp(0.85rem, 2vw + 0.5rem, 0.9rem);
     }
+    
     .cta-content h2 {
         font-size: clamp(1.3rem, 4vw + 0.5rem, 1.6rem);
+        margin-bottom: 0.8rem;
     }
+    
     .cta-content p {
-        font-size: 0.9rem;
+        font-size: clamp(0.85rem, 2vw + 0.5rem, 0.9rem);
+        margin-bottom: 1.2rem;
+    }
+    
+    .wizard-step {
+        padding: 0.8rem;
+    }
+    
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
+    
+    .step-content h4 {
+        font-size: 1rem;
+    }
+    
+    .step-content p {
+        font-size: 0.85rem;
     }
 }
