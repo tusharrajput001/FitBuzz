@@ -734,16 +734,17 @@ html, body {
 
 .section-title {
     text-align: center;
-    font-size: clamp(1.6rem, 3vw + 0.8rem, 2.5rem);
+    font-size: 2rem !important;
     font-weight: 700;
     margin-bottom: 3rem;
     color: #ffffff;
     overflow-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
+    justify-content: center;
 }
 
-.section-title::after {
+/* .section-title::after {
     content: '';
     display: block;
     width: 80px;
@@ -751,7 +752,7 @@ html, body {
     background: linear-gradient(135deg, #00a2ff, #4fc3f7);
     margin: 1rem auto 0;
     border-radius: 2px;
-}
+} */
 
 .features-grid {
     display: grid;
@@ -913,9 +914,11 @@ html, body {
     .hero-text{
         margin-left: 1rem;
     }
-    .section-title::after{
+    .wizard-visual{
         display: none;
-        font-size: 2.2rem;
+    }
+    .section-title::after{
+        display: none !important;
     }
     .hero-section {
         min-height: 80vh;
