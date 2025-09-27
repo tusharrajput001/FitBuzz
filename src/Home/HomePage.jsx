@@ -31,7 +31,8 @@ const HomePage = () => {
                     </div>
                 </div>
                 
-                <div className="hero-content">
+                <div className="container">
+                    <div className="hero-content">
                     <div className="hero-text">
                         <h1 className="hero-title">
                             Transform Your Fitness Journey
@@ -92,6 +93,7 @@ const HomePage = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </section>
@@ -226,29 +228,59 @@ const HomePage = () => {
                         
                         <div className="ai-feature-card">
                             <div className="ai-feature-visual">
-                                <div className="dashboard-demo">
-                                    <div className="chart-container">
-                                        <div className="chart-bar" style={{height: '80px'}}></div>
-                                        <div className="chart-bar" style={{height: '120px'}}></div>
-                                        <div className="chart-bar" style={{height: '60px'}}></div>
-                                        <div className="chart-bar" style={{height: '100px'}}></div>
-                                        <div className="chart-bar" style={{height: '90px'}}></div>
-                                        <div className="chart-bar" style={{height: '140px'}}></div>
-                                        <div className="chart-bar" style={{height: '70px'}}></div>
-                                    </div>
-                                    <div className="progress-ring">
-                                        <div className="ring-progress">75%</div>
+                                <div className="plan-demo">
+                                    <div className="diet-workout-demo" style={{
+                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
+                                        borderRadius: '16px',
+                                        padding: '16px',
+                                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+                                    }}>
+                                        <div className="combined-image" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: '1fr 1fr',
+                                            gap: '12px',
+                                            alignItems: 'center'
+                                        }}>
+                                            <div className="image-left" style={{
+                                                background: 'rgba(255,255,255,0.06)',
+                                                borderRadius: '12px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                height: '110px',
+                                                fontSize: '48px'
+                                            }}>🍱</div>
+                                            <div className="image-right" style={{
+                                                background: 'rgba(255,255,255,0.06)',
+                                                borderRadius: '12px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                height: '110px',
+                                                fontSize: '48px'
+                                            }}>🏋️</div>
+                                        </div>
+                                        <div className="mini-captions" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: '1fr 1fr',
+                                            marginTop: '10px',
+                                            fontSize: '12px',
+                                            opacity: 0.9
+                                        }}>
+                                            <div style={{textAlign: 'center'}}>Personalized Diet</div>
+                                            <div style={{textAlign: 'center'}}>Custom Workouts</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="ai-feature-content">
-                                <h3>Smart Dashboard</h3>
-                                <p>Visualize your progress with interactive charts and analytics. Track your workouts, nutrition, and overall fitness journey with beautiful, easy-to-understand graphs.</p>
+                                <h3>Personalized Diet & Workout</h3>
+                                <p>Get a tailored meal plan and exercise routine aligned with your goals, preferences, and schedule.</p>
                                 <ul className="feature-list">
-                                    <li>Progress charts</li>
-                                    <li>Goal tracking</li>
-                                    <li>Performance analytics</li>
-                                    <li>Trend analysis</li>
+                                    <li>Custom meal plan with calories and macros</li>
+                                    <li>Goal-based workout routine</li>
+                                    <li>Equipment and time friendly options</li>
+                                    <li>Weekly adjustments from progress</li>
                                 </ul>
                             </div>
                         </div>

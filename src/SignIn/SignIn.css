@@ -34,7 +34,8 @@
     color: rgb(255, 255, 255);
     font-size: 16px;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .signin-container > div > input::placeholder {
@@ -43,24 +44,35 @@
 
 .signin-container > div > input:focus {
     border-color: #00d4ff;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
 }
 
 .signin-btn{
     background: linear-gradient(135deg, #00d4ff, #87ceeb);
     border: none;
     padding: 12px 24px;
-    font-weight: 400;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     height: 50px;
     width: 100%;
     font-size: 16px;
     border-radius: 8px;
     margin-top: 1rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
 }
 
 .signin-btn:hover {
-    background: linear-gradient(135deg, #00d4ff, #87ceeb);
+    background: linear-gradient(135deg, #00b8e6, #6bb6ff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.signin-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
 }
 
 .signin-container > p{
@@ -89,12 +101,14 @@
     /* background: linear-gradient(135deg, #00d4ff, #87ceeb); */
     cursor: pointer;
     display: inline-block;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .signin-container > p > a:hover {
     color: rgb(255, 255, 255);
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
 }
 
 .back-btn {
@@ -124,5 +138,36 @@
     .signin-btn {
         height: 45px;
         font-size: 14px;
+    }
+}
+
+/* Additional fixes for 320px width */
+@media (max-width: 320px) {
+    .signin-container {
+        padding: 1.2rem;
+        min-width: 220px;
+        max-width: 280px;
+        margin: 1rem auto;
+    }
+    
+    .signin-container > h2 {
+        font-size: 20px;
+        margin-bottom: 1rem;
+    }
+    
+    .signin-container > div > input {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    .signin-btn {
+        height: 40px;
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+    
+    .signin-container > p {
+        font-size: 12px;
+        margin-top: 1rem;
     }
 }

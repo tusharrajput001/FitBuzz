@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const supabase = require('../db');
+const { supabase } = require('../db');
 const authenticateToken = require('../middleware/auth');
 
 // POST /api/plans - Create a new workout and diet plan

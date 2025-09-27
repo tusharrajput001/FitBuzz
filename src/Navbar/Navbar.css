@@ -138,3 +138,31 @@ button {
   }
 }
   
+
+@media (max-width: 320px) {
+  .btn-outline {
+    height: 30px;
+    font-size: 12px !important; /* force small font for tiny screens */
+    padding: 3px 10px !important;
+  }
+  
+  .btn-fill {
+    height: 30px;
+    font-size: 12px !important; /* keep consistent with outline */
+    padding: 3px 10px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .btn-outline {
+    height: 30px;
+    font-size: 12px !important; /* force small font for tiny screens */
+    padding: 3px 10px !important;
+  }
+  
+  .btn-fill {
+    height: 30px;
+    font-size: 12px !important; /* keep consistent with outline */
+    padding: 3px 10px !important;
+  }
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Signup.css";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,10 +16,26 @@ const Signup = () => {
     try {
       const res = await axios.post(`${API_URL}/api/auth/signup`, form);
       if (res.status == 201) {
+        toast.success("Account created successfully! Please sign in.");
         navigate("/signin");
       }
     } catch (error) {
       console.log("Signup failed:", error.response?.data || error.message);
+      
+      // Show error message based on the error response
+      if (error.response?.status === 400) {
+        if (error.response.data?.message?.includes("email")) {
+          toast.error("Email already exists. Please use a different email.");
+        } else {
+          toast.error("Invalid data. Please check your information.");
+        }
+      } else if (error.response?.status === 409) {
+        toast.error("Email already exists. Please use a different email.");
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Signup failed. Please try again.");
+      }
     }
   };
 

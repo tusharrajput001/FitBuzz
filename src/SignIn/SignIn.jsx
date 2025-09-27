@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./SignIn.css";
 import axios from "axios"
 import { AuthContext } from "../AuthContext/AuthContext";
+import { toast } from 'react-toastify';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 console.log('SignIn API_URL:', API_URL);
@@ -22,11 +23,23 @@ const SignIn = () => {
         localStorage.setItem("token", res.data.session.access_token);
         localStorage.setItem("refreshToken", res.data.session.refresh_token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-         setIsAuthenticated(true);
+        setIsAuthenticated(true);
+        toast.success("Login successful! Welcome back!");
         navigate("/")
       }
     } catch (error) {
       console.log("Login failed:", error.response?.data || error.message);
+      
+      // Show error message based on the error response
+      if (error.response?.status === 401) {
+        toast.error("Invalid email or password. Please try again.");
+      } else if (error.response?.status === 404) {
+        toast.error("User not found. Please check your email.");
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
     }
   };
 
