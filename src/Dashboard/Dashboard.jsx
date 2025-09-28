@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [expandedDays, setExpandedDays] = useState(new Set());
   const [selectedMeals, setSelectedMeals] = useState({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [showTokenTest, setShowTokenTest] = useState(false); // Commented out for production
 
   // Fetch user's plans from database
@@ -144,11 +145,17 @@ const Dashboard = () => {
   const handlePlanChange = (planId) => {
     const selectedPlan = plans.find(plan => plan.id === planId);
     setCurrentPlan(selectedPlan);
+    setIsDropdownOpen(false); // Close dropdown after selection
     
     // Expand the first day of the selected plan
     if (selectedPlan.workout_days && selectedPlan.workout_days.length > 0) {
       setExpandedDays(new Set([selectedPlan.workout_days[0].id]));
     }
+  };
+
+  // Toggle dropdown
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   // Toggle day expansion
@@ -225,7 +232,9 @@ const Dashboard = () => {
             <h2>Fitness Plans</h2>
             <span className="plans-count">TOTAL: {plans.length}</span>
           </div>
-          <div className="plans-container">
+          
+          {/* Desktop/Tablet View - Show all plans */}
+          <div className="plans-container desktop-plans">
             {plans.map(plan => (
               <div 
                 key={plan.id} 
@@ -242,6 +251,57 @@ const Dashboard = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mobile View - Show active plan + dropdown */}
+          <div className="mobile-plans">
+            {/* Active Plan Display */}
+            {currentPlan && (
+              <div className="active-plan-display">
+                <div className="active-plan-card">
+                  <div className="active-plan-info">
+                    <span className="active-plan-name">
+                      {currentPlan.name}
+                    </span>
+                    <span className="active-plan-date">
+                      {new Date(currentPlan.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <span className="active-badge">ACTIVE</span>
+                </div>
+                <button 
+                  className="dropdown-toggle"
+                  onClick={toggleDropdown}
+                  aria-label="Select other plans"
+                >
+                  <span className="dropdown-icon">
+                    {isDropdownOpen ? '▲' : '▼'}
+                  </span>
+                </button>
+              </div>
+            )}
+
+            {/* Dropdown for other plans */}
+            {isDropdownOpen && (
+              <div className="plans-dropdown">
+                {plans.filter(plan => plan.id !== currentPlan?.id).map(plan => (
+                  <div 
+                    key={plan.id} 
+                    className="dropdown-plan-item"
+                    onClick={() => handlePlanChange(plan.id)}
+                  >
+                    <div className="dropdown-plan-info">
+                      <span className="dropdown-plan-name">
+                        {plan.name}
+                      </span>
+                      <span className="dropdown-plan-date">
+                        {new Date(plan.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

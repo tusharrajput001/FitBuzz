@@ -10,13 +10,17 @@ const Layout = ({ children }) => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="layout">
       <button className="sidebar-toggle" onClick={toggleSidebar}>
         ☰
       </button>
       
-      <Sidebar isOpen={sidebarOpen} />
+      <Sidebar isOpen={sidebarOpen} onCloseSidebar={closeSidebar} />
       
       <div className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <Navbar />
