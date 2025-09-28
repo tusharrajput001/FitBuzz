@@ -661,7 +661,6 @@
 
 .day-exercises .exercise-info h5 {
   margin: 0 0 5px 0;
-  color: #495057;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -1057,7 +1056,129 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Mobile Bottom Navigation - Hidden by default */
+.mobile-plans {
+  display: none;
+}
+
+.active-plan-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.active-plan-card {
+  flex: 1;
+  background: rgba(0, 191, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(0, 191, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.active-plan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.active-plan-name {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.active-plan-date {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.dropdown-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+}
+
+.dropdown-toggle:hover {
+  transform: translateY(-1px);
+    border: 1px solid rgba(0, 191, 255, 0.6);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+    background: rgba(0, 191, 255, 0.2);
+}
+
+.dropdown-icon {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-toggle:hover .dropdown-icon {
+  transform: scale(1.1);
+}
+
+.plans-dropdown {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: slideDown 0.3s ease-out;
+  margin-top: 8px;
+}
+
+.dropdown-plan-item {
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-plan-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-plan-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.dropdown-plan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dropdown-plan-name {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.dropdown-plan-date {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 400;
+}
+
 /* Mobile Responsive Design - 550px and below */
 @media (max-width: 550px) {
   .dashboard {
@@ -1067,6 +1188,15 @@
     background: transparent;
     min-height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Hide desktop plans and show mobile plans */
+  .desktop-plans {
+    display: none;
+  }
+
+  .mobile-plans {
+    display: block;
   }
 
   /* Mobile Status Bar */
@@ -1119,12 +1249,12 @@
     font-weight: 400;
   }
 
-  /* Mobile Plan Card */
+  /* Remove the old mobile plan card styles since we're using the new dropdown */
   .plans-container {
-    display: block;
-    gap: 0;
+    display: none;
   }
 
+  /* Mobile Plan Card */
   .plan-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
@@ -1711,46 +1841,39 @@
   }
 }
 
-/* Tablet and Desktop Responsive Design */
-@media (min-width: 551px) and (max-width: 768px) {
-  .dashboard {
-    padding: 15px;
-  }
-  
-  .charts-section {
-    padding: 30px 20px;
-  }
-  
-  .charts-placeholder h2 {
-    font-size: 2rem;
-  }
-  
-  .tab-btn {
-    padding: 15px 20px;
-    font-size: 1rem;
-  }
-  
-  .content-area {
-    padding: 20px;
-  }
-  
-  .workout-item,
-  .diet-item {
-    padding: 15px;
-  }
-  
-  .meal-info h4,
-  .exercise-info h4 {
-    font-size: 1rem;
+/* Tablet and Desktop - Show desktop plans, hide mobile */
+@media (min-width: 551px) {
+  .desktop-plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    max-width: 100%;
   }
 
-  .plan-selector {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
+  .mobile-plans {
+    display: none;
   }
-  
-  .plan-dropdown {
-    min-width: auto;
+
+  /* Responsive grid adjustments */
+  @media (max-width: 1200px) {
+    .desktop-plans {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .desktop-plans {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    
+    .plan-card {
+      padding: 12px;
+      min-height: 70px;
+    }
+    
+    .plan-name {
+      font-size: 0.9rem;
+    }
   }
 }

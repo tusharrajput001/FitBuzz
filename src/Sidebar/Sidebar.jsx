@@ -5,7 +5,7 @@ import { AiFillHome } from "react-icons/ai";
 import { CgGym } from "react-icons/cg";
 import { FaCamera } from "react-icons/fa";
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, onCloseSidebar }) => {
   const location = useLocation();
 
   const menuItems = [
@@ -21,6 +21,12 @@ const Sidebar = ({ isOpen }) => {
     return location.pathname === path;
   };
 
+  const handleMenuItemClick = () => {
+    if (onCloseSidebar) {
+      onCloseSidebar();
+    }
+  };
+
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <nav className="sidebar-nav">
@@ -29,12 +35,7 @@ const Sidebar = ({ isOpen }) => {
             key={item.path}
             to={item.path}
             className={`sidebar-item ${isActive(item.path) ? 'active' : ''}`}
-            onClick={() => {
-              // Close sidebar on mobile after clicking a menu item
-              if (window.innerWidth <= 768) {
-                // We'll handle this in the parent component
-              }
-            }}
+            onClick={handleMenuItemClick}
           >
             <span className="sidebar-icon">{item.icon}</span>
             <span className="sidebar-label">{item.label}</span>
