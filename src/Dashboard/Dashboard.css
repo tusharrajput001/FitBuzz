@@ -662,6 +662,7 @@
 .day-exercises .exercise-info h5 {
   margin: 0 0 5px 0;
   font-size: 1rem;
+  color: #495057;
   font-weight: 600;
 }
 
@@ -1198,6 +1199,12 @@
   .mobile-plans {
     display: block;
   }
+  .day-exercises .exercise-info h5 {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: 600;
+}
 
   /* Mobile Status Bar */
   .dashboard::before {
